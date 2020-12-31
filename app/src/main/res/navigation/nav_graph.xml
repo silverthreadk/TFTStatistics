@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchSummonerFragment">
+
+    <fragment
+        android:id="@+id/searchSummonerFragment"
+        android:name="com.silverthread.tftstatistics.ui.summoner.SearchSummonerFragment"
+        android:label="TodoListFragment">
+        <action
+            android:id="@+id/action_SearchSummonerFragment_to_SummonerTabFragment"
+            app:destination="@id/summonorTabFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/summonorTabFragment"
+        android:name="com.silverthread.tftstatistics.ui.summoner.SummonerTabFragment"
+        android:label="SummonorTabFragment" >
+    </fragment>
+</navigation>
