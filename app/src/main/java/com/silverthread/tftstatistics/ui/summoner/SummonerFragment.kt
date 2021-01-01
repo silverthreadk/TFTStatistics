@@ -1,6 +1,7 @@
 package com.silverthread.tftstatistics.ui.summoner
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,10 +32,20 @@ class SummonerFragment : Fragment() {
                 .load(url)
                 .into(imageSummonerIcon)
         })
+        summonerViewModel.leagueEntryLiveData.observe(requireActivity(), Observer { leagueEntry ->
+            tier.text = "${leagueEntry.tier} ${leagueEntry.rank}"
+            val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier?.toLowerCase(), "drawable", requireContext().packageName)
+            imageTierIcon.setImageResource(tierResource)
+            leaguePoints.text = leagueEntry.leaguePoints + " LP"
+            games.text = ((leagueEntry.wins?.toInt() ?: 0) + (leagueEntry.losses?.toInt() ?: 0)).toString()
+            wins.text = leagueEntry.wins
+            losses.text = leagueEntry.losses
+        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
         summonerViewModel.summonerLiveData.removeObservers(requireActivity())
+        summonerViewModel.leagueEntryLiveData.removeObservers(requireActivity())
     }
 }

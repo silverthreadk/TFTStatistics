@@ -1,0 +1,17 @@
+package com.silverthread.tftstatistics.model.response
+
+class LeagueEntry {
+    var leagueId: String? = null
+    var queueType: String? = null
+    var tier: String? = "unranked"
+    var rank: String? = null
+    var summonerId: String? = null
+    var summonerName: String? = null
+    var leaguePoints: String? = null
+    var wins: String? = "0"
+    var losses: String? = "0"
+    var veteran: String? = null
+    var inactive: String? = null
+    var freshBlood: String? = null
+    var hotStreak: String? = null
+}

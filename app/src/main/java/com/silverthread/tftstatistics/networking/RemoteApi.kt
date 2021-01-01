@@ -19,4 +19,17 @@ class RemoteApi(private val apiService: RemoteApiService) {
     } catch (error: Throwable) {
         Failure(error)
     }
+
+    suspend fun getTFTLegueBySummoner(encryptedSummonerId: String) = try {
+        val data = apiService.getTFTLegueBySummoner(encryptedSummonerId, API_KEY)
+
+        if(data.isSuccessful){
+            Success(data)
+        } else {
+            Failure(null)
+        }
+
+    } catch (error: Throwable) {
+        Failure(error)
+    }
 }
