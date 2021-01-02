@@ -16,13 +16,13 @@ fun buildClient(): OkHttpClient =
         .connectTimeout(1, TimeUnit.MINUTES)
         .build()
 
-fun buildRetrofit(): Retrofit {
+fun buildRetrofit(baseUrl: String): Retrofit {
     return Retrofit.Builder()
         .client(buildClient())
-        .baseUrl(BASE_URL)
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 }
 
-fun buildApiService(): RemoteApiService =
-    buildRetrofit().create(RemoteApiService::class.java)
+fun buildApiService(baseUrl: String): RemoteApiService =
+    buildRetrofit(baseUrl).create(RemoteApiService::class.java)

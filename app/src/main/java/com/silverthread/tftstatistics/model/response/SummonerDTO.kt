@@ -1,6 +1,6 @@
 package com.silverthread.tftstatistics.model.response
 
-class Summoner {
+class SummonerDTO {
     var accountId: String? = null
     var profileIconId: String? = null
     var revisionDate: String? = null

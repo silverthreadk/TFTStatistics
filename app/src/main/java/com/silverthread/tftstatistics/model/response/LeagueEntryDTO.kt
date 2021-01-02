@@ -1,6 +1,6 @@
 package com.silverthread.tftstatistics.model.response
 
-class LeagueEntry {
+class LeagueEntryDTO {
     var leagueId: String? = null
     var queueType: String? = null
     var tier: String? = "unranked"
