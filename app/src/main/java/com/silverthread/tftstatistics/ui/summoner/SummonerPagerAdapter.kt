@@ -3,6 +3,7 @@ package com.silverthread.tftstatistics.ui.summoner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.silverthread.tftstatistics.ui.matchHistory.MatchHistoryFragment
 
 class SummonerPagerAdapter(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

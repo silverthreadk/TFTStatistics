@@ -15,7 +15,7 @@ class SummonerViewModel: ViewModel() {
 
     val summonerLiveData = MutableLiveData<SummonerDTO>()
     val leagueEntryLiveData = MutableLiveData<LeagueEntryDTO>()
-    val MatchLiveData = MutableLiveData<MatchDTO>()
+    val MatchLiveData = MutableLiveData<List<MatchDTO>>()
 
     fun getSummoner(summonerName: String) {
         viewModelScope.launch {
@@ -48,9 +48,11 @@ class SummonerViewModel: ViewModel() {
         val result = remoteApi.getMatches(puuid)
         if (result is Success) {
             result.data.body()?.let {
+                val matchesList = mutableListOf<MatchDTO>()
                 it.forEach { matchId ->
-                    getMatch(matchId)
+                    (getMatch(matchId, matchesList))
                 }
+                MatchLiveData.postValue(matchesList)
             }
             Log.d("getMatches", result.toString())
         } else {
@@ -58,11 +60,11 @@ class SummonerViewModel: ViewModel() {
         }
     }
 
-    suspend fun getMatch(matchId: String) {
+    suspend fun getMatch(matchId: String, matchesList: MutableList<MatchDTO>) {
         val result = remoteApi.getMatch(matchId)
         if (result is Success) {
             result.data.body()?.let {
-                MatchLiveData.postValue(result.data.body())
+                matchesList.add(it)
             }
             Log.d("getMatch", result.toString())
         } else {
