@@ -37,7 +37,7 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
                 participant.puuid == puuid
             }?.forEach{ participant ->
                 itemView.placement.text = "#" + participant.placement
-                participant.units?.let { setupUnits(it) }
+                setupUnits(participant.units)
             }
         }
 
@@ -47,7 +47,8 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             }
         }
 
-        private fun setupUnits(units: List<UnitDTO>) {
+        private fun setupUnits(units: List<UnitDTO>?) {
+            if (units.isNullOrEmpty()) return
             itemView.UnitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
             itemView.UnitRecyclerView.adapter = adapter
