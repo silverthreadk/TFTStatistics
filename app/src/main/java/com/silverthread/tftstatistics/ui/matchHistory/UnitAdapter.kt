@@ -25,6 +25,8 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
             val context = itemView.context
             itemView.unitImage.setImageResource(
                     context.resources.getIdentifier(unit.character_id?.toLowerCase(), "drawable", context.packageName))
+            itemView.unitImage.setBackgroundResource(
+                    context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
             setupItems(unit.items)
         }
 

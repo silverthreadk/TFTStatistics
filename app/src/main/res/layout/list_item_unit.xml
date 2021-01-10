@@ -10,6 +10,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="2dp"
+        android:background="@drawable/rarity_frame_3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
