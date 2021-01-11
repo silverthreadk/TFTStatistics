@@ -28,6 +28,7 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
             itemView.unitImage.setBackgroundResource(
                     context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
             setupItems(unit.items)
+            setupTier(unit.tier?.toInt(), unit.rarity)
         }
 
         override fun onClick(view: View?) {
@@ -42,6 +43,27 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
                     GridLayoutManager(itemView.context, 3, GridLayoutManager.VERTICAL, false)
             itemView.ItemRecyclerView.adapter = adapter
             adapter.updateItems(items)
+        }
+
+        private fun setupTier(tier: Int?, rarity: String?) {
+            if (tier == null || rarity == null) return
+
+            when(tier) {
+                1-> {
+                    itemView.tierIcon2.visibility = View.INVISIBLE
+                    itemView.tierIcon3.visibility = View.INVISIBLE
+                }
+
+                2-> {
+                    itemView.tierIcon3.visibility = View.INVISIBLE
+                }
+            }
+
+            val context = itemView.context
+            val color = context.resources.getColor(context.resources.getIdentifier("rarity_" + rarity, "color", context.packageName))
+            itemView.tierIcon1.color = color
+            itemView.tierIcon2.color = color
+            itemView.tierIcon3.color = color
         }
     }
 

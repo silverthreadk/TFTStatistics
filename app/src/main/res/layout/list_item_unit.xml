@@ -1,22 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
+    <com.silverthread.tftstatistics.ui.matchHistory.StarView
+        android:id="@+id/tierIcon1"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/unitImage"
+        app:layout_constraintEnd_toStartOf="@+id/tierIcon2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.silverthread.tftstatistics.ui.matchHistory.StarView
+        android:id="@+id/tierIcon2"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tierIcon1"
+        app:layout_constraintEnd_toStartOf="@+id/tierIcon3"
+        app:layout_constraintStart_toEndOf="@+id/tierIcon1"
+        app:layout_constraintTop_toTopOf="@+id/tierIcon1" />
+
+    <com.silverthread.tftstatistics.ui.matchHistory.StarView
+        android:id="@+id/tierIcon3"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tierIcon2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tierIcon2"
+        app:layout_constraintTop_toTopOf="@+id/tierIcon2" />
 
     <ImageView
         android:id="@+id/unitImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/rarity_frame_3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ItemRecyclerView"
-        tools:srcCompat="@drawable/tft4_aatrox"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tierIcon1"
+        tools:srcCompat="@drawable/tft4_aatrox" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ItemRecyclerView"

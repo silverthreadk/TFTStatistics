@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 1 Open the declare-styleable tag and set the name attribute to your custom view class name. -->
+    <declare-styleable name="StarView">
+        <!--2 Add new attributes with different names and set their format to a suitable format.-->
+        <attr name="color" format="color" />
+    </declare-styleable>
+</resources>
