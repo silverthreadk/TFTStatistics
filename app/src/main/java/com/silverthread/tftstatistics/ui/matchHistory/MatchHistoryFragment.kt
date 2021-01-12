@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -27,6 +28,11 @@ class MatchHistoryFragment  : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         matchHistoryRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
         matchHistoryRecyclerView.adapter = adapter
+
+        val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
+        context?.let{
+            matchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(ContextCompat.getColor(it, R.color.rarity_0), heightInPixels))
+        }
     }
 
     override fun onResume(){
