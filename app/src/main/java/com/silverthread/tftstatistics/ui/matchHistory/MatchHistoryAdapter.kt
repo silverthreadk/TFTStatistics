@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.model.response.MatchDTO
+import com.silverthread.tftstatistics.model.response.TraitDTO
 import com.silverthread.tftstatistics.model.response.UnitDTO
 import kotlinx.android.synthetic.main.list_item_match.view.*
 import java.text.SimpleDateFormat
@@ -17,7 +18,8 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private lateinit var match: MatchDTO
-        private val adapter = UnitAdapter(mutableListOf())
+        private val unitAdapter = UnitAdapter(mutableListOf())
+        private val traitAdapter = TraitAdapter(mutableListOf())
 
         init {
             itemView.setOnClickListener(this)
@@ -38,6 +40,7 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             }?.forEach{ participant ->
                 itemView.placement.text = "#" + participant.placement
                 setupUnits(participant.units)
+                setupTraits(participant.traits)
             }
         }
 
@@ -51,8 +54,16 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             if (units.isNullOrEmpty()) return
             itemView.UnitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
-            itemView.UnitRecyclerView.adapter = adapter
-            adapter.updateUnits(units)
+            itemView.UnitRecyclerView.adapter = unitAdapter
+            unitAdapter.updateUnits(units)
+        }
+
+        private fun setupTraits(traits: List<TraitDTO>?) {
+            if (traits.isNullOrEmpty()) return
+            itemView.TraitRecyclerView.layoutManager =
+                    GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
+            itemView.TraitRecyclerView.adapter = traitAdapter
+            traitAdapter.updateTraits(traits.filter{it.style != "0"}.map{it})
         }
     }
 
