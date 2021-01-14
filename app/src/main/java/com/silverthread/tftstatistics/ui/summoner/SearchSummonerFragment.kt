@@ -28,7 +28,7 @@ class SearchSummonerFragment : Fragment() {
         searchButton.setOnClickListener {
             val summonerName = summonerInput.text.toString()
             if (summonerName.isNotBlank()) {
-                summonerViewModel.getSummoner(summonerName)
+                summonerViewModel.loadSummoner(summonerName)
                 showSummonor()
             } else {
 

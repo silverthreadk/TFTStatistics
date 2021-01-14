@@ -28,5 +28,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/summonerInput"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_search_category_default" />
+        app:srcCompat="@drawable/baseline_search_black_48" />
 </androidx.constraintlayout.widget.ConstraintLayout>
