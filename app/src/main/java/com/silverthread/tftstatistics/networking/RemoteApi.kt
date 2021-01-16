@@ -3,6 +3,8 @@ package com.silverthread.tftstatistics.networking
 import com.silverthread.tftstatistics.BuildConfig
 import com.silverthread.tftstatistics.model.Failure
 import com.silverthread.tftstatistics.model.Success
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 const val BASE_URL1 = "https://kr.api.riotgames.com"
 const val BASE_URL2 = "https://asia.api.riotgames.com"
@@ -11,7 +13,9 @@ const val API_KEY = BuildConfig.ApiKey
 
 class RemoteApi(private val summonerApiService: RemoteApiService, private val matchApiService: RemoteApiService) {
     suspend fun getSummoner(summonerName: String) = try {
-        val data = summonerApiService.getSummoner(summonerName, API_KEY)
+        val data = withContext(Dispatchers.IO) {
+            summonerApiService.getSummoner(summonerName, API_KEY)
+        }
 
         if(data.isSuccessful){
             Success(data)
@@ -24,7 +28,9 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
     }
 
     suspend fun getTFTLegueBySummoner(encryptedSummonerId: String) = try {
-        val data = summonerApiService.getTFTLegueBySummoner(encryptedSummonerId, API_KEY)
+        val data = withContext(Dispatchers.IO) {
+            summonerApiService.getTFTLegueBySummoner(encryptedSummonerId, API_KEY)
+        }
 
         if(data.isSuccessful){
             Success(data)
@@ -37,7 +43,9 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
     }
 
     suspend fun getMatches(puuid: String) = try {
-        val data = matchApiService.getMatches(puuid, "20", API_KEY)
+        val data = withContext(Dispatchers.IO) {
+            matchApiService.getMatches(puuid, "20", API_KEY)
+        }
 
         if(data.isSuccessful){
             Success(data)
@@ -50,7 +58,9 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
     }
 
     suspend fun getMatch(matchId: String) = try {
-        val data = matchApiService.getMatch(matchId, API_KEY)
+        val data = withContext(Dispatchers.IO) {
+            matchApiService.getMatch(matchId, API_KEY)
+        }
 
         if(data.isSuccessful){
             Success(data)
