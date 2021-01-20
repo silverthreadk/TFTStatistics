@@ -10,28 +10,32 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.silverthread.tftstatistics.R
+import com.silverthread.tftstatistics.databinding.FragmentMatchHistoryBinding
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
-import kotlinx.android.synthetic.main.fragment_match_history.*
 
 class MatchHistoryFragment  : Fragment() {
 
+    private var _binding: FragmentMatchHistoryBinding? = null
+    private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
 
     private val adapter = MatchHistoryAdapter(mutableListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_match_history, container, false)
+        _binding = FragmentMatchHistoryBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        matchHistoryRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
-        matchHistoryRecyclerView.adapter = adapter
+        binding.matchHistoryRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        binding.matchHistoryRecyclerView.adapter = adapter
 
         val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
         context?.let{
-            matchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(ContextCompat.getColor(it, R.color.rarity_0), heightInPixels))
+            binding.matchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(ContextCompat.getColor(it, R.color.rarity_0), heightInPixels))
         }
     }
 

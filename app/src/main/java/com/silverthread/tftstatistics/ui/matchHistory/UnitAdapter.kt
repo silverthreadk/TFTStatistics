@@ -6,15 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.silverthread.tftstatistics.R
+import com.silverthread.tftstatistics.databinding.ListItemUnitBinding
 import com.silverthread.tftstatistics.model.response.UnitDTO
-import kotlinx.android.synthetic.main.list_item_match.view.*
-import kotlinx.android.synthetic.main.list_item_unit.view.*
 
 class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter<UnitAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private lateinit var unit: UnitDTO
-        private val adapter = ItemAdapter(mutableListOf())
+        private val binding = ListItemUnitBinding.bind(itemView)
+        private val itemAdapter = ItemAdapter(mutableListOf())
+        private val tierAdapter = TierAdapter(mutableListOf())
 
         init {
             itemView.setOnClickListener(this)
@@ -23,9 +24,9 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
         fun bind(unit: UnitDTO) {
             this.unit = unit
             val context = itemView.context
-            itemView.unitImage.setImageResource(
+            binding.unitImage.setImageResource(
                     context.resources.getIdentifier(unit.character_id?.toLowerCase(), "drawable", context.packageName))
-            itemView.unitImage.setBackgroundResource(
+            binding.unitImage.setBackgroundResource(
                     context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
             setupItems(unit.items)
             setupTier(unit.tier?.toInt(), unit.rarity)
@@ -39,31 +40,24 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
 
         private fun setupItems(items: List<String>?) {
             if (items.isNullOrEmpty()) return
-            itemView.ItemRecyclerView.layoutManager =
+            binding.ItemRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 3, GridLayoutManager.VERTICAL, false)
-            itemView.ItemRecyclerView.adapter = adapter
-            adapter.updateItems(items)
+            binding.ItemRecyclerView.adapter = itemAdapter
+            itemAdapter.updateItems(items)
         }
 
         private fun setupTier(tier: Int?, rarity: String?) {
             if (tier == null || rarity == null) return
 
-            when(tier) {
-                1-> {
-                    itemView.tierIcon2.visibility = View.INVISIBLE
-                    itemView.tierIcon3.visibility = View.INVISIBLE
-                }
+            binding.TierRecyclerView.layoutManager =
+                GridLayoutManager(itemView.context, 3, GridLayoutManager.VERTICAL, false)
+            binding.TierRecyclerView.adapter = tierAdapter
 
-                2-> {
-                    itemView.tierIcon3.visibility = View.INVISIBLE
-                }
+            val tiers = arrayListOf<String>()
+            for (i in 0 until tier) {
+                tiers.add(rarity)
             }
-
-            val context = itemView.context
-            val color = context.resources.getColor(context.resources.getIdentifier("rarity_" + rarity, "color", context.packageName))
-            itemView.tierIcon1.color = color
-            itemView.tierIcon2.color = color
-            itemView.tierIcon3.color = color
+            tierAdapter.updateTiers(tiers)
         }
     }
 

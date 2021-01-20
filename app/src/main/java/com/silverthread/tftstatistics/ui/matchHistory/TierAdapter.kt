@@ -5,23 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.silverthread.tftstatistics.R
-import com.silverthread.tftstatistics.databinding.ListItemItemBinding
+import com.silverthread.tftstatistics.databinding.ListItemTierBinding
 
-class ItemAdapter(private val items: MutableList<String>): RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+class TierAdapter(private val tiers: MutableList<String>): RecyclerView.Adapter<TierAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
-        private lateinit var item: String
-        private val binding = ListItemItemBinding.bind(itemView)
+        private lateinit var tier: String
+        private val binding = ListItemTierBinding.bind(itemView)
 
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(item: String) {
-            this.item = item
+            this.tier = item
             val context = itemView.context
-            binding.itemImage.setImageResource(
-                    context.resources.getIdentifier("item_"+item, "drawable", context.packageName))
+            val color = context.resources.getColor(context.resources.getIdentifier("rarity_" + item, "color", context.packageName))
+            binding.tierIcon.color = color
         }
 
         override fun onClick(view: View?) {
@@ -33,18 +33,18 @@ class ItemAdapter(private val items: MutableList<String>): RecyclerView.Adapter<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_item, parent, false))
+                .inflate(R.layout.list_item_tier, parent, false))
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = tiers.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(tiers[position])
     }
 
-    fun updateItems(items: List<String>) {
-        this.items.clear()
-        this.items.addAll(items)
+    fun updateTiers(items: List<String>) {
+        this.tiers.clear()
+        this.tiers.addAll(items)
         notifyDataSetChanged()
     }
 }

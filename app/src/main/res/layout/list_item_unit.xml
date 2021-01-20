@@ -5,32 +5,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.silverthread.tftstatistics.ui.matchHistory.StarView
-        android:id="@+id/tierIcon1"
-        android:layout_width="15dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/TierRecyclerView"
+        android:layout_width="0dp"
         android:layout_height="15dp"
         app:layout_constraintBottom_toTopOf="@+id/unitImage"
-        app:layout_constraintEnd_toStartOf="@+id/tierIcon2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.silverthread.tftstatistics.ui.matchHistory.StarView
-        android:id="@+id/tierIcon2"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tierIcon1"
-        app:layout_constraintEnd_toStartOf="@+id/tierIcon3"
-        app:layout_constraintStart_toEndOf="@+id/tierIcon1"
-        app:layout_constraintTop_toTopOf="@+id/tierIcon1" />
-
-    <com.silverthread.tftstatistics.ui.matchHistory.StarView
-        android:id="@+id/tierIcon3"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tierIcon2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tierIcon2"
-        app:layout_constraintTop_toTopOf="@+id/tierIcon2" />
 
     <ImageView
         android:id="@+id/unitImage"
@@ -42,7 +24,7 @@
         app:layout_constraintBottom_toTopOf="@+id/ItemRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tierIcon1"
+        app:layout_constraintTop_toBottomOf="@+id/TierRecyclerView"
         tools:srcCompat="@drawable/tft4_aatrox" />
 
     <androidx.recyclerview.widget.RecyclerView

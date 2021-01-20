@@ -9,38 +9,46 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.silverthread.tftstatistics.R
-import kotlinx.android.synthetic.main.fragment_summoner.*
+import com.silverthread.tftstatistics.databinding.FragmentSummonerBinding
 
 
 class SummonerFragment : Fragment() {
 
+    private var _binding: FragmentSummonerBinding? = null
+    private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_summoner, container, false)
+        _binding = FragmentSummonerBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
-            summonerName.text = summoner.name
+            binding.summonerName.text = summoner.name
             val url = "http://ddragon.leagueoflegends.com/cdn/10.25.1/img/profileicon/${summoner.profileIconId}.png"
             Glide.with(this)
                 .load(url)
-                .into(imageSummonerIcon)
+                .into(binding.imageSummonerIcon)
         })
         summonerViewModel.leagueEntryLiveData.observe(requireActivity(), Observer { leagueEntry ->
-            tier.text = "${leagueEntry.tier} ${leagueEntry.rank}"
+            binding.tier.text = "${leagueEntry.tier} ${leagueEntry.rank}"
             val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier?.toLowerCase(), "drawable", requireContext().packageName)
-            imageTierIcon.setImageResource(tierResource)
-            leaguePoints.text = leagueEntry.leaguePoints + " LP"
-            games.text = ((leagueEntry.wins?.toInt() ?: 0) + (leagueEntry.losses?.toInt() ?: 0)).toString()
-            wins.text = leagueEntry.wins
-            losses.text = leagueEntry.losses
+            binding.imageTierIcon.setImageResource(tierResource)
+            binding.leaguePoints.text = leagueEntry.leaguePoints + " LP"
+            binding.games.text = ((leagueEntry.wins?.toInt() ?: 0) + (leagueEntry.losses?.toInt() ?: 0)).toString()
+            binding.wins.text = leagueEntry.wins
+            binding.losses.text = leagueEntry.losses
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {

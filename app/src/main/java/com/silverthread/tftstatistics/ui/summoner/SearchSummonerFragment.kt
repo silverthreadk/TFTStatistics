@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import com.silverthread.tftstatistics.R
-import kotlinx.android.synthetic.main.fragment_search_summoner.*
+import com.silverthread.tftstatistics.databinding.FragmentSearchSummonerBinding
 
 class SearchSummonerFragment : Fragment() {
 
+    private var _binding: FragmentSearchSummonerBinding? = null
+    private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search_summoner, container, false)
+        _binding = FragmentSearchSummonerBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,9 +27,14 @@ class SearchSummonerFragment : Fragment() {
         initUi()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun initUi() {
-        searchButton.setOnClickListener {
-            val summonerName = summonerInput.text.toString()
+        binding.searchButton.setOnClickListener {
+            val summonerName = binding.summonerInput.text.toString()
             if (summonerName.isNotBlank()) {
                 summonerViewModel.loadSummoner(summonerName)
                 showSummonor()

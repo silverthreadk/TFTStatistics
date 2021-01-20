@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.silverthread.tftstatistics.R
-import kotlinx.android.synthetic.main.fragment_summoner_tab.*
+import com.silverthread.tftstatistics.databinding.FragmentSummonerTabBinding
 
 class SummonerTabFragment : Fragment() {
 
+    private var _binding: FragmentSummonerTabBinding? = null
+    private val binding get() = _binding!!
     private val pagerAdapter by lazy {
         SummonerPagerAdapter(
             childFragmentManager
@@ -18,7 +19,9 @@ class SummonerTabFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_summoner_tab, container, false)
+        _binding = FragmentSummonerTabBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,9 +29,14 @@ class SummonerTabFragment : Fragment() {
         initUi()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun initUi() {
-        tabs.setupWithViewPager(fragmentPager)
-        fragmentPager.adapter = pagerAdapter
+        binding.tabs.setupWithViewPager(binding.fragmentPager)
+        binding.fragmentPager.adapter = pagerAdapter
     }
 
 

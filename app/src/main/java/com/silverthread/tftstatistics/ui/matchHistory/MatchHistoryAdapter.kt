@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.silverthread.tftstatistics.R
+import com.silverthread.tftstatistics.databinding.ListItemMatchBinding
 import com.silverthread.tftstatistics.model.response.MatchDTO
 import com.silverthread.tftstatistics.model.response.TraitDTO
 import com.silverthread.tftstatistics.model.response.UnitDTO
-import kotlinx.android.synthetic.main.list_item_match.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,6 +18,7 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private lateinit var match: MatchDTO
+        private val binding = ListItemMatchBinding.bind(itemView)
         private val unitAdapter = UnitAdapter(mutableListOf())
         private val traitAdapter = TraitAdapter(mutableListOf())
 
@@ -29,16 +30,16 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             this.match = match
 
             var dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(match.info?.game_datetime?.toLong())
-            itemView.gameDatetime.text = dateFormat
+            binding.gameDatetime.text = dateFormat
 
             var gameLength= (match.info?.game_length?.toDouble()?.div(60)).toString()
             gameLength = gameLength.substring(0,2)+":"+ gameLength.substring(3,5);
-            itemView.gameLength.text = gameLength
+            binding.gameLength.text = gameLength
 
             match.info?.participants?.filter { participant ->
                 participant.puuid == puuid
             }?.forEach{ participant ->
-                itemView.placement.text = "#" + participant.placement
+                binding.placement.text = "#" + participant.placement
                 setupUnits(participant.units)
                 setupTraits(participant.traits)
             }
@@ -52,17 +53,17 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
 
         private fun setupUnits(units: List<UnitDTO>?) {
             if (units.isNullOrEmpty()) return
-            itemView.UnitRecyclerView.layoutManager =
+            binding.UnitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
-            itemView.UnitRecyclerView.adapter = unitAdapter
+            binding.UnitRecyclerView.adapter = unitAdapter
             unitAdapter.updateUnits(units)
         }
 
         private fun setupTraits(traits: List<TraitDTO>?) {
             if (traits.isNullOrEmpty()) return
-            itemView.TraitRecyclerView.layoutManager =
+            binding.TraitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
-            itemView.TraitRecyclerView.adapter = traitAdapter
+            binding.TraitRecyclerView.adapter = traitAdapter
             traitAdapter.updateTraits(traits.filter{it.style != "0"}.map{it})
         }
     }

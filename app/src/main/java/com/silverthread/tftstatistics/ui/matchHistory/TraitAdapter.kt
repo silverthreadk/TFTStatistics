@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.silverthread.tftstatistics.R
+import com.silverthread.tftstatistics.databinding.ListItemTraitBinding
 import com.silverthread.tftstatistics.model.response.TraitDTO
-import kotlinx.android.synthetic.main.list_item_item.view.*
-import kotlinx.android.synthetic.main.list_item_trait.view.*
 
 class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adapter<TraitAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private lateinit var trait: TraitDTO
+        private val binding = ListItemTraitBinding.bind(itemView)
 
         init {
             itemView.setOnClickListener(this)
@@ -28,7 +28,7 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
                 }
             }
             val context = itemView.context
-            itemView.traitImage.setImageResource(
+            binding.traitImage.setImageResource(
                     context.resources.getIdentifier("trait_" + traitName, "drawable", context.packageName))
         }
 
