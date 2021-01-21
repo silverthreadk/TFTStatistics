@@ -27,6 +27,21 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
         Failure(error)
     }
 
+    suspend fun getSummonerByPuuid(puuid: String) = try {
+        val data = withContext(Dispatchers.IO) {
+            summonerApiService.getSummonerByPuuid(puuid, API_KEY)
+        }
+
+        if(data.isSuccessful){
+            Success(data)
+        } else {
+            Failure(null)
+        }
+
+    } catch (error: Throwable) {
+        Failure(error)
+    }
+
     suspend fun getTFTLegueBySummoner(encryptedSummonerId: String) = try {
         val data = withContext(Dispatchers.IO) {
             summonerApiService.getTFTLegueBySummoner(encryptedSummonerId, API_KEY)

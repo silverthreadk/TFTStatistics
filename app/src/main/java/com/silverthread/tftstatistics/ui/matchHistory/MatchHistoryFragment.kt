@@ -37,6 +37,13 @@ class MatchHistoryFragment  : Fragment() {
         context?.let{
             binding.matchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(ContextCompat.getColor(it, R.color.rarity_0), heightInPixels))
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            summonerViewModel.summonerLiveData.value?.puuid?.let{
+                summonerViewModel.loadSummonerByPuuid(it)
+            }
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onResume(){

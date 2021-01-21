@@ -36,7 +36,25 @@ class SummonerViewModel: ViewModel() {
         }
     }
 
-    suspend fun loadTFTLegueBySummoner(encryptedSummonerId: String) {
+    fun loadSummonerByPuuid(puuid: String) {
+        viewModelScope.launch {
+            if (isActive) {
+                progressData.postValue(0)
+                val result = remoteApi.getSummonerByPuuid(puuid)
+                if (result is Success) {
+                    summonerLiveData.postValue(result.data.body())
+                    Log.d("loadSummoner", result.toString())
+                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
+                    result.data.body()?.puuid?.let { loadMatches(it) }
+                } else {
+                    Log.d("loadSummoner", result.toString())
+                }
+                progressData.postValue(8)
+            }
+        }
+    }
+
+    private suspend fun loadTFTLegueBySummoner(encryptedSummonerId: String) {
         val result = remoteApi.getTFTLegueBySummoner(encryptedSummonerId)
         if (result is Success) {
             if (result.data.body().isNullOrEmpty()) return
@@ -44,22 +62,6 @@ class SummonerViewModel: ViewModel() {
             Log.d("loadTFTLegueBySummoner", result.toString())
         } else {
             Log.d("loadTFTLegueBySummoner", result.toString())
-        }
-    }
-
-    suspend fun loadMatches(puuid: String) {
-        val result = remoteApi.getMatches(puuid)
-        if (result is Success) {
-            result.data.body()?.let {
-                val matchesList = mutableListOf<MatchDTO>()
-                it.forEach { matchId ->
-                    (loadMatch(matchId, matchesList))
-                }
-                MatchLiveData.postValue(matchesList)
-            }
-            Log.d("loadMatches", result.toString())
-        } else {
-            Log.d("loadMatches", result.toString())
         }
     }
 
@@ -72,6 +74,22 @@ class SummonerViewModel: ViewModel() {
             Log.d("loadMatch", result.toString())
         } else {
             Log.d("loadMatch", result.toString())
+        }
+    }
+
+    private suspend fun loadMatches(puuid: String) {
+        val result = remoteApi.getMatches(puuid)
+        if (result is Success) {
+            result.data.body()?.let {
+                val matchesList = mutableListOf<MatchDTO>()
+                it.forEach { matchId ->
+                    (loadMatch(matchId, matchesList))
+                }
+                MatchLiveData.postValue(matchesList)
+            }
+            Log.d("loadMatches", result.toString())
+        } else {
+            Log.d("loadMatches", result.toString())
         }
     }
 }

@@ -5,118 +5,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageSummonerIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageTierIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageSummonerIcon" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/summonerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageSummonerIcon"
-        app:layout_constraintStart_toEndOf="@+id/imageSummonerIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageSummonerIcon"
-        tools:text="summonerName" />
+        <ImageView
+            android:id="@+id/imageSummonerIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/leaguePoints"
-        app:layout_constraintStart_toEndOf="@+id/imageTierIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageTierIcon"
-        tools:text="tier" />
+        <ImageView
+            android:id="@+id/imageTierIcon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageSummonerIcon" />
 
-    <TextView
-        android:id="@+id/leaguePoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageTierIcon"
-        app:layout_constraintStart_toEndOf="@+id/imageTierIcon"
-        app:layout_constraintTop_toBottomOf="@+id/tier"
-        tools:text="0 LP" />
+        <TextView
+            android:id="@+id/summonerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageSummonerIcon"
+            app:layout_constraintStart_toEndOf="@+id/imageSummonerIcon"
+            app:layout_constraintTop_toTopOf="@+id/imageSummonerIcon"
+            tools:text="summonerName" />
 
-    <TextView
-        android:id="@+id/gamesLable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="Games : "
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageTierIcon"/>
+        <TextView
+            android:id="@+id/tier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/leaguePoints"
+            app:layout_constraintStart_toEndOf="@+id/imageTierIcon"
+            app:layout_constraintTop_toTopOf="@+id/imageTierIcon"
+            tools:text="tier" />
 
-    <TextView
-        android:id="@+id/games"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/gamesLable"
-        app:layout_constraintTop_toBottomOf="@+id/imageTierIcon"
-        tools:text="0" />
+        <TextView
+            android:id="@+id/leaguePoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageTierIcon"
+            app:layout_constraintStart_toEndOf="@+id/imageTierIcon"
+            app:layout_constraintTop_toBottomOf="@+id/tier"
+            tools:text="0 LP" />
 
-    <TextView
-        android:id="@+id/winsLable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="Wins : "
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gamesLable"/>
+        <TextView
+            android:id="@+id/gamesLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="Games : "
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageTierIcon"/>
 
-    <TextView
-        android:id="@+id/wins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/winsLable"
-        app:layout_constraintTop_toBottomOf="@+id/gamesLable"
-        tools:text="0" />
+        <TextView
+            android:id="@+id/games"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/gamesLable"
+            app:layout_constraintTop_toBottomOf="@+id/imageTierIcon"
+            tools:text="0" />
 
-    <TextView
-        android:id="@+id/lossesLable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:text="Losses : "
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/winsLable" />
+        <TextView
+            android:id="@+id/winsLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="Wins : "
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gamesLable"/>
 
-    <TextView
-        android:id="@+id/losses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="30sp"
-        app:layout_constraintStart_toEndOf="@+id/lossesLable"
-        app:layout_constraintTop_toBottomOf="@+id/winsLable"
-        tools:text="0" />
+        <TextView
+            android:id="@+id/wins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/winsLable"
+            app:layout_constraintTop_toBottomOf="@+id/gamesLable"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/lossesLable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="Losses : "
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/winsLable" />
+
+        <TextView
+            android:id="@+id/losses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/lossesLable"
+            app:layout_constraintTop_toBottomOf="@+id/winsLable"
+            tools:text="0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,6 +44,13 @@ class SummonerFragment : Fragment() {
             binding.wins.text = leagueEntry.wins
             binding.losses.text = leagueEntry.losses
         })
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            summonerViewModel.summonerLiveData.value?.puuid?.let{
+                summonerViewModel.loadSummonerByPuuid(it)
+            }
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onDestroyView() {
