@@ -24,8 +24,15 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
         fun bind(unit: UnitDTO) {
             this.unit = unit
             val context = itemView.context
+            val charId = unit.character_id?.let{
+                if (it.startsWith("TFT4b_")) {
+                    "tft4_" + it.substring(6).toLowerCase()
+                } else {
+                    it.toLowerCase()
+                }
+            }
             binding.unitImage.setImageResource(
-                    context.resources.getIdentifier(unit.character_id?.toLowerCase(), "drawable", context.packageName))
+                    context.resources.getIdentifier(charId, "drawable", context.packageName))
             binding.unitImage.setBackgroundResource(
                     context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
             setupItems(unit.items)
