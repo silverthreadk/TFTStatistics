@@ -44,11 +44,8 @@ class MatchHistoryFragment  : Fragment() {
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }
-    }
 
-    override fun onResume(){
-        super.onResume()
-        summonerViewModel.MatchLiveData.observe(requireActivity(), Observer { match ->
+        summonerViewModel.matchLiveData.observe(requireActivity(), Observer { match ->
             adapter.updateMatchHistory(match, summonerViewModel.summonerLiveData.value?.puuid?:"")
         })
     }

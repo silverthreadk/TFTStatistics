@@ -1,5 +1,6 @@
 package com.silverthread.tftstatistics.ui.summoner
 
+import SingleLiveEvent
 import android.util.Log
 import androidx.lifecycle.*
 import com.silverthread.tftstatistics.App
@@ -12,26 +13,37 @@ import kotlinx.coroutines.launch
 
 class SummonerViewModel: ViewModel() {
     private val remoteApi = App.remoteApi
-
-    val summonerLiveData = MutableLiveData<SummonerDTO>()
-    val leagueEntryLiveData = MutableLiveData<LeagueEntryDTO>()
-    val MatchLiveData = MutableLiveData<List<MatchDTO>>()
-    val progressData = MutableLiveData<Int>()
+    private val _summonerLiveData = MutableLiveData<SummonerDTO>()
+    val summonerLiveData : LiveData<SummonerDTO>
+        get() = _summonerLiveData
+    private val _leagueEntryLiveData = MutableLiveData<LeagueEntryDTO>()
+    val leagueEntryLiveData : LiveData<LeagueEntryDTO>
+        get() = _leagueEntryLiveData
+    private val _matchLiveData = MutableLiveData<List<MatchDTO>>()
+    val matchLiveData : LiveData<List<MatchDTO>>
+        get() = _matchLiveData
+    private val _progressLiveData = MutableLiveData<Int>()
+    val progressLiveData : LiveData<Int>
+        get() = _progressLiveData
+    private val _searchEventLiveData = SingleLiveEvent<Void>()
+    val searchEventLiveData : LiveData<Void>
+        get() = _searchEventLiveData
 
     fun loadSummoner(summonerName: String) {
         viewModelScope.launch {
             if (isActive) {
-                progressData.postValue(0)
+                _progressLiveData.value = 0
                 val result = remoteApi.getSummoner(summonerName)
                 if (result is Success) {
-                    summonerLiveData.postValue(result.data.body())
+                    _summonerLiveData.value = result.data.body()
                     Log.d("loadSummoner", result.toString())
                     result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
+                    _searchEventLiveData.call()
                 } else {
                     Log.d("loadSummoner", result.toString())
                 }
-                progressData.postValue(8)
+                _progressLiveData.value = 8
             }
         }
     }
@@ -39,17 +51,17 @@ class SummonerViewModel: ViewModel() {
     fun loadSummonerByPuuid(puuid: String) {
         viewModelScope.launch {
             if (isActive) {
-                progressData.postValue(0)
+                _progressLiveData.value = 0
                 val result = remoteApi.getSummonerByPuuid(puuid)
                 if (result is Success) {
-                    summonerLiveData.postValue(result.data.body())
+                    _summonerLiveData.value = result.data.body()
                     Log.d("loadSummoner", result.toString())
                     result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
                 } else {
                     Log.d("loadSummoner", result.toString())
                 }
-                progressData.postValue(8)
+                _progressLiveData.value = 8
             }
         }
     }
@@ -58,7 +70,7 @@ class SummonerViewModel: ViewModel() {
         val result = remoteApi.getTFTLegueBySummoner(encryptedSummonerId)
         if (result is Success) {
             if (result.data.body().isNullOrEmpty()) return
-            leagueEntryLiveData.postValue(result.data.body()?.first())
+            _leagueEntryLiveData.value = result.data.body()?.first()
             Log.d("loadTFTLegueBySummoner", result.toString())
         } else {
             Log.d("loadTFTLegueBySummoner", result.toString())
@@ -85,7 +97,7 @@ class SummonerViewModel: ViewModel() {
                 it.forEach { matchId ->
                     (loadMatch(matchId, matchesList))
                 }
-                MatchLiveData.postValue(matchesList)
+                _matchLiveData.value = matchesList
             }
             Log.d("loadMatches", result.toString())
         } else {

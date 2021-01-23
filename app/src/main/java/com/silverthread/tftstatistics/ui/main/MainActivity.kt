@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         Navigation.findNavController(this, R.id.nav_host_fragment)
 
-        summonerViewModel.progressData.observe(this, Observer {
+        summonerViewModel.progressLiveData.observe(this, Observer {
             binding.progress.visibility = it
         })
     }

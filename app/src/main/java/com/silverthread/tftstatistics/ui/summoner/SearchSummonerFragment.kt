@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.silverthread.tftstatistics.databinding.FragmentSearchSummonerBinding
 
@@ -25,6 +26,9 @@ class SearchSummonerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
+        summonerViewModel.searchEventLiveData.observe(requireActivity(), Observer {
+            showSummonor()
+        })
     }
 
     override fun onDestroyView() {
@@ -37,7 +41,6 @@ class SearchSummonerFragment : Fragment() {
             val summonerName = binding.summonerInput.text.toString()
             if (summonerName.isNotBlank()) {
                 summonerViewModel.loadSummoner(summonerName)
-                showSummonor()
             } else {
 
             }
