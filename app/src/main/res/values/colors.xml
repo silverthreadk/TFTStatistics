@@ -12,5 +12,9 @@
     <color name="rarity_2">#FF207AC7</color>
     <color name="rarity_3">#FFC440DA</color>
     <color name="rarity_4">#FFFFB93B</color>
+    <color name="trait_1">#FFBA8A6B</color>
+    <color name="trait_2">#FFBDDBDE</color>
+    <color name="trait_3">#FFF7D77B</color>
+    <color name="trait_4">#FFFEFEFE</color>
 
 </resources>

@@ -7,16 +7,26 @@
     android:layout_width="match_parent"
     android:layout_height="130dp">
 
-
     <TextView
         android:id="@+id/placement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/gameDatetime"
+        app:layout_constraintBottom_toTopOf="@+id/type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         tools:text="#1" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/gameDatetime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placement"
+        tools:text="Ranked" />
 
     <TextView
         android:id="@+id/gameDatetime"
@@ -24,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placement"
+        app:layout_constraintTop_toBottomOf="@+id/type"
         app:layout_constraintBottom_toTopOf="@+id/gameLength"
         tools:text="2021.01.01" />
 

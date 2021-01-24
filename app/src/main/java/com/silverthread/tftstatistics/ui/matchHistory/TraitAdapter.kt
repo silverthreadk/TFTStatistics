@@ -30,6 +30,9 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
             val context = itemView.context
             binding.traitImage.setImageResource(
                     context.resources.getIdentifier("trait_" + traitName, "drawable", context.packageName))
+            val color = context.resources.getIdentifier("trait_" + trait.style, "color", context.packageName)
+            val csl = context.resources.getColorStateList(color)
+            binding.traitImage.setImageTintList(csl)
         }
 
         override fun onClick(view: View?) {
@@ -53,6 +56,9 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
     fun updateTraits(traits: List<TraitDTO>) {
         this.traits.clear()
         this.traits.addAll(traits)
+        this.traits.sortByDescending {
+            it.style
+        }
         notifyDataSetChanged()
     }
 }

@@ -82,6 +82,9 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
     fun updateUnits(units: List<UnitDTO>) {
         this.units.clear()
         this.units.addAll(units)
+        this.units.sortedBy {
+            it.rarity
+        }
         notifyDataSetChanged()
     }
 }

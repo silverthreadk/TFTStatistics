@@ -35,6 +35,7 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             var gameLength= (match.info?.game_length?.toDouble()?.div(60)).toString()
             gameLength = gameLength.substring(0,2)+":"+ gameLength.substring(3,5);
             binding.gameLength.text = gameLength
+            binding.type.text = if (match.info?.queue_id == "1100") "Ranked" else "Normal"
 
             match.info?.participants?.filter { participant ->
                 participant.puuid == puuid
