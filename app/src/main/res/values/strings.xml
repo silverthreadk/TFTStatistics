@@ -1,3 +1,17 @@
 <resources>
+    <string-array name="region_array">
+        <item>BR</item>
+        <item>EUNE</item>
+        <item>EUW</item>
+        <item>JP</item>
+        <item>KR</item>
+        <item>LAN</item>
+        <item>LAS</item>
+        <item>NA</item>
+        <item>OCE</item>
+        <item>TR</item>
+        <item>RU</item>
+    </string-array>
     <string name="app_name">TFTStatistics</string>
+    <string name="summoner_name">Summoner name</string>
 </resources>

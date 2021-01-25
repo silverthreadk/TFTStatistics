@@ -6,7 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/summonerInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed" />
 
     <EditText
         android:id="@+id/summonerInput"
@@ -14,19 +22,53 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
+        android:hint="@string/summoner_name"
         app:layout_constraintEnd_toStartOf="@+id/searchButton"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed" />
 
     <ImageButton
         android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/summonerInput"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_search_black_48" />
+        app:srcCompat="@drawable/baseline_search_black_48"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <ImageView
+        android:id="@+id/furyhorn"
+        android:layout_width="146dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/summonerInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/furyhorn" />
+
+    <ImageView
+        android:id="@+id/hushtail"
+        android:layout_width="163dp"
+        android:layout_height="152dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/summonerInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/hushtail" />
+
+    <ImageView
+        android:id="@+id/pengu"
+        android:layout_width="205dp"
+        android:layout_height="242dp"
+        app:layout_constraintBottom_toTopOf="@+id/summonerInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pengu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
