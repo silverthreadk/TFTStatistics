@@ -12,10 +12,9 @@ class App : Application() {
     companion object {
         private lateinit var instance: App
 
-        private val summonerApiService by lazy { buildApiService(BASE_URL1) }
-        private val matchApiService by lazy { buildApiService(BASE_URL2) }
+        private val apiService by lazy { buildApiService() }
 
-        val remoteApi by lazy { RemoteApi(summonerApiService, matchApiService) }
+        val remoteApi by lazy { RemoteApi(apiService) }
     }
 
     override fun onCreate() {

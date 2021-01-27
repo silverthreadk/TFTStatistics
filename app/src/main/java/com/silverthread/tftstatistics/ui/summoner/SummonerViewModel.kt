@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.silverthread.tftstatistics.App
 import com.silverthread.tftstatistics.model.Success
+import com.silverthread.tftstatistics.model.constants.Region
 import com.silverthread.tftstatistics.model.response.LeagueEntryDTO
 import com.silverthread.tftstatistics.model.response.MatchDTO
 import com.silverthread.tftstatistics.model.response.SummonerDTO
@@ -13,6 +14,9 @@ import kotlinx.coroutines.launch
 
 class SummonerViewModel: ViewModel() {
     private val remoteApi = App.remoteApi
+    private val _regionLiveData = MutableLiveData<Region>()
+    val regionLiveData : LiveData<Region>
+        get() = _regionLiveData
     private val _summonerLiveData = MutableLiveData<SummonerDTO>()
     val summonerLiveData : LiveData<SummonerDTO>
         get() = _summonerLiveData
@@ -29,11 +33,19 @@ class SummonerViewModel: ViewModel() {
     val searchEventLiveData : LiveData<Void>
         get() = _searchEventLiveData
 
+    init {
+        setRegion(Region.KR)
+    }
+
+    fun setRegion(region: Region){
+        _regionLiveData.value = region
+    }
+
     fun loadSummoner(summonerName: String) {
         viewModelScope.launch {
             if (isActive) {
                 _progressLiveData.value = 0
-                val result = remoteApi.getSummoner(summonerName)
+                val result = remoteApi.getSummoner((regionLiveData.value?: Region.KR).platformRoutingValue, summonerName)
                 if (result is Success) {
                     _summonerLiveData.value = result.data.body()
                     Log.d("loadSummoner", result.toString())
@@ -52,7 +64,7 @@ class SummonerViewModel: ViewModel() {
         viewModelScope.launch {
             if (isActive) {
                 _progressLiveData.value = 0
-                val result = remoteApi.getSummonerByPuuid(puuid)
+                val result = remoteApi.getSummonerByPuuid((regionLiveData.value?: Region.KR).platformRoutingValue, puuid)
                 if (result is Success) {
                     _summonerLiveData.value = result.data.body()
                     Log.d("loadSummoner", result.toString())
@@ -67,7 +79,7 @@ class SummonerViewModel: ViewModel() {
     }
 
     private suspend fun loadTFTLegueBySummoner(encryptedSummonerId: String) {
-        val result = remoteApi.getTFTLegueBySummoner(encryptedSummonerId)
+        val result = remoteApi.getTFTLegueBySummoner((regionLiveData.value?: Region.KR).platformRoutingValue, encryptedSummonerId)
         if (result is Success) {
             if (result.data.body().isNullOrEmpty()) return
             _leagueEntryLiveData.value = result.data.body()?.first()
@@ -78,7 +90,7 @@ class SummonerViewModel: ViewModel() {
     }
 
     suspend fun loadMatch(matchId: String, matchesList: MutableList<MatchDTO>) {
-        val result = remoteApi.getMatch(matchId)
+        val result = remoteApi.getMatch((regionLiveData.value?: Region.KR).RegionalRoutingValue, matchId)
         if (result is Success) {
             result.data.body()?.let {
                 matchesList.add(it)
@@ -90,7 +102,7 @@ class SummonerViewModel: ViewModel() {
     }
 
     private suspend fun loadMatches(puuid: String) {
-        val result = remoteApi.getMatches(puuid)
+        val result = remoteApi.getMatches((regionLiveData.value?: Region.KR).RegionalRoutingValue, puuid)
         if (result is Success) {
             result.data.body()?.let {
                 val matchesList = mutableListOf<MatchDTO>()

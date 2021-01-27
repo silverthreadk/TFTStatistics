@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentSearchSummonerBinding
+import com.silverthread.tftstatistics.model.constants.Region
 
 class SearchSummonerFragment : Fragment() {
 
@@ -30,9 +31,6 @@ class SearchSummonerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi()
-        summonerViewModel.searchEventLiveData.observe(requireActivity(), Observer {
-            showSummonor()
-        })
     }
 
     override fun onDestroyView() {
@@ -58,15 +56,22 @@ class SearchSummonerFragment : Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinner.adapter = adapter
         }
-        binding.spinner.setSelection(4, false)
+
         binding.spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-
+                summonerViewModel.setRegion(Region.fromId(resources.getStringArray(R.array.region_array)[position]))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
+        })
+
+        summonerViewModel.searchEventLiveData.observe(requireActivity(), Observer {
+            showSummonor()
+        })
+        summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->
+            binding.spinner.setSelection(region.ordinal, false)
         })
     }
 

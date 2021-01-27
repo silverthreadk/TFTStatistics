@@ -11,9 +11,9 @@ const val BASE_URL2 = "https://asia.api.riotgames.com"
 
 const val API_KEY = BuildConfig.ApiKey
 
-class RemoteApi(private val summonerApiService: RemoteApiService, private val matchApiService: RemoteApiService) {
-    suspend fun getSummoner(summonerName: String) = try {
-        val data = summonerApiService.getSummoner(summonerName, API_KEY)
+class RemoteApi(private val apiService: RemoteApiService) {
+    suspend fun getSummoner(platform: String, summonerName: String) = try {
+        val data = apiService.getSummoner(platform, summonerName, API_KEY)
 
         if(data.isSuccessful){
             Success(data)
@@ -25,8 +25,8 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
         Failure(error)
     }
 
-    suspend fun getSummonerByPuuid(puuid: String) = try {
-        val data = summonerApiService.getSummonerByPuuid(puuid, API_KEY)
+    suspend fun getSummonerByPuuid(platform: String, puuid: String) = try {
+        val data = apiService.getSummonerByPuuid(platform, puuid, API_KEY)
 
         if(data.isSuccessful){
             Success(data)
@@ -38,8 +38,8 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
         Failure(error)
     }
 
-    suspend fun getTFTLegueBySummoner(encryptedSummonerId: String) = try {
-        val data = summonerApiService.getTFTLegueBySummoner(encryptedSummonerId, API_KEY)
+    suspend fun getTFTLegueBySummoner(platform: String, encryptedSummonerId: String) = try {
+        val data = apiService.getTFTLegueBySummoner(platform, encryptedSummonerId, API_KEY)
 
         if(data.isSuccessful){
             Success(data)
@@ -51,8 +51,8 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
         Failure(error)
     }
 
-    suspend fun getMatches(puuid: String) = try {
-        val data = matchApiService.getMatches(puuid, "20", API_KEY)
+    suspend fun getMatches(region: String, puuid: String) = try {
+        val data = apiService.getMatches(region, puuid, "20", API_KEY)
 
         if(data.isSuccessful){
             Success(data)
@@ -64,8 +64,8 @@ class RemoteApi(private val summonerApiService: RemoteApiService, private val ma
         Failure(error)
     }
 
-    suspend fun getMatch(matchId: String) = try {
-        val data = matchApiService.getMatch(matchId, API_KEY)
+    suspend fun getMatch(region: String, matchId: String) = try {
+        val data = apiService.getMatch(region, matchId, API_KEY)
 
         if(data.isSuccessful){
             Success(data)
