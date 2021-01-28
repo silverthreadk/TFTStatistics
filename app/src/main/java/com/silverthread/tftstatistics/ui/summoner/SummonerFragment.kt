@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.silverthread.tftstatistics.databinding.FragmentSummonerBinding
+import kotlin.math.roundToInt
 
 
 class SummonerFragment : Fragment() {
@@ -29,10 +30,12 @@ class SummonerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
+            binding.level.text = "LV. ${summoner.summonerLevel}"
             binding.summonerName.text = summoner.name
             val url = "http://ddragon.leagueoflegends.com/cdn/10.25.1/img/profileicon/${summoner.profileIconId}.png"
             Glide.with(this)
                 .load(url)
+                .circleCrop()
                 .into(binding.imageSummonerIcon)
         })
         summonerViewModel.leagueEntryLiveData.observe(requireActivity(), Observer { leagueEntry ->
@@ -40,9 +43,12 @@ class SummonerFragment : Fragment() {
             val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier?.toLowerCase(), "drawable", requireContext().packageName)
             binding.imageTierIcon.setImageResource(tierResource)
             binding.leaguePoints.text = leagueEntry.leaguePoints + " LP"
-            binding.games.text = ((leagueEntry.wins?.toInt() ?: 0) + (leagueEntry.losses?.toInt() ?: 0)).toString()
-            binding.wins.text = leagueEntry.wins
-            binding.losses.text = leagueEntry.losses
+            binding.games.text = (leagueEntry.wins + leagueEntry.losses).toString()
+            binding.wins.text = leagueEntry.wins.toString()
+            binding.winRate.text = String.format("%.2f %%", (leagueEntry.wins.toDouble() / (leagueEntry.wins + leagueEntry.losses)))
+        })
+        summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->
+            binding.region.text = region.id
         })
 
         binding.swipeRefreshLayout.setOnRefreshListener {
@@ -60,6 +66,7 @@ class SummonerFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        summonerViewModel.regionLiveData.removeObservers(requireActivity())
         summonerViewModel.summonerLiveData.removeObservers(requireActivity())
         summonerViewModel.leagueEntryLiveData.removeObservers(requireActivity())
     }
