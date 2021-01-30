@@ -3,11 +3,6 @@ package com.silverthread.tftstatistics.networking
 import com.silverthread.tftstatistics.BuildConfig
 import com.silverthread.tftstatistics.model.Failure
 import com.silverthread.tftstatistics.model.Success
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-
-const val BASE_URL1 = "https://kr.api.riotgames.com"
-const val BASE_URL2 = "https://asia.api.riotgames.com"
 
 const val API_KEY = BuildConfig.ApiKey
 

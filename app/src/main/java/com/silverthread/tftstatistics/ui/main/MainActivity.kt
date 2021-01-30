@@ -12,7 +12,7 @@ import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val summonerViewModel: SummonerViewModel by viewModels()
+    private val summonerViewModel: SummonerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

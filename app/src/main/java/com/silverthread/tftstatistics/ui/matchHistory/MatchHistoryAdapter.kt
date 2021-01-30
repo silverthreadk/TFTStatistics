@@ -29,18 +29,18 @@ class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
         fun bind(match: MatchDTO) {
             this.match = match
 
-            var dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(match.info?.game_datetime?.toLong())
+            val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(match.info?.game_datetime?.toLong())
             binding.gameDatetime.text = dateFormat
 
             var gameLength= (match.info?.game_length?.toDouble()?.div(60)).toString()
-            gameLength = gameLength.substring(0,2)+":"+ gameLength.substring(3,5);
+            gameLength = gameLength.substring(0,2)+":"+ gameLength.substring(3,5)
             binding.gameLength.text = gameLength
-            binding.type.text = if (match.info?.queue_id == "1100") "Ranked" else "Normal"
+            binding.type.text = if (match.info?.queue_id == "1100") itemView.context.getString(R.string.ranked) else itemView.context.getString(R.string.normal)
 
             match.info?.participants?.filter { participant ->
                 participant.puuid == puuid
             }?.forEach{ participant ->
-                binding.placement.text = "#" + participant.placement
+                binding.placement.text = String.format(itemView.context.getString(R.string.placement), participant.placement)
                 setupUnits(participant.units)
                 setupTraits(participant.traits)
             }

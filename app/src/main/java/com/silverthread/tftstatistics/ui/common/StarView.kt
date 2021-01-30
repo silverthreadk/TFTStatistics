@@ -1,4 +1,4 @@
-package com.silverthread.tftstatistics.ui.matchHistory
+package com.silverthread.tftstatistics.ui.common
 
 import android.content.Context
 import android.graphics.Canvas
@@ -15,7 +15,8 @@ class StarView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         private const val DEFAULT_COLOR = Color.BLACK
     }
 
-    var color = DEFAULT_COLOR
+    var color =
+        DEFAULT_COLOR
         set(value){
             field = value
             invalidate()
@@ -46,7 +47,6 @@ class StarView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun drawStar(canvas: Canvas) {
         val mid = width / 2.toFloat()
         val min = minOf(width, height).toFloat()
-        val fat = min / 17
         val offset = mid - min
 
         paint.color = color
@@ -69,7 +69,9 @@ class StarView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun setupAttributes(attrs: AttributeSet?) {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.StarView,
                 0, 0)
-        color = typedArray.getColor(R.styleable.StarView_color, DEFAULT_COLOR)
+        color = typedArray.getColor(R.styleable.StarView_color,
+            DEFAULT_COLOR
+        )
         typedArray.recycle()
     }
 }

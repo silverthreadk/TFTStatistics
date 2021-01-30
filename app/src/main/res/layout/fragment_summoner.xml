@@ -22,20 +22,20 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageTierIcon"
+                android:id="@+id/tierIcon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/gamesLable"
+                app:layout_constraintStart_toStartOf="@+id/games"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageSummonerIcon"
+                android:id="@+id/summonerIcon"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/gamesLable"
+                app:layout_constraintEnd_toStartOf="@+id/games"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,10 +44,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="LV. 0"
-                app:layout_constraintEnd_toStartOf="@+id/gamesLable"
+                android:text="@string/lp"
+                app:layout_constraintEnd_toStartOf="@+id/games"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageSummonerIcon" />
+                app:layout_constraintTop_toBottomOf="@+id/summonerIcon" />
 
             <TextView
                 android:id="@+id/summonerName"
@@ -56,10 +56,10 @@
                 android:layout_marginStart="10dp"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/level"
-                app:layout_constraintBottom_toBottomOf="@+id/winRateLable"
+                app:layout_constraintBottom_toBottomOf="@+id/winRate"
                 app:layout_constraintEnd_toStartOf="@+id/region"
-                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 tools:text="summonerName" />
 
             <TextView
@@ -69,10 +69,10 @@
                 android:layout_marginStart="10dp"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/summonerName"
-                app:layout_constraintEnd_toStartOf="@+id/gamesLable"
-                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintEnd_toStartOf="@+id/games"
                 app:layout_constraintStart_toEndOf="@+id/summonerName"
                 app:layout_constraintTop_toTopOf="@+id/summonerName"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 tools:text="KR" />
 
             <TextView
@@ -82,9 +82,9 @@
                 android:layout_marginTop="5dp"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@+id/leaguePoints"
+                app:layout_constraintStart_toStartOf="@+id/tierIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tierIcon"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@+id/imageTierIcon"
-                app:layout_constraintTop_toBottomOf="@+id/imageTierIcon"
                 tools:text="tier" />
 
             <TextView
@@ -93,69 +93,42 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="@+id/imageTierIcon"
+                app:layout_constraintEnd_toEndOf="@+id/tierIcon"
                 app:layout_constraintStart_toEndOf="@+id/tier"
                 app:layout_constraintTop_toTopOf="@+id/tier"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 tools:text="0 LP" />
 
             <TextView
-                android:id="@+id/gamesLable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Games : "
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tier" />
-
-            <TextView
                 android:id="@+id/games"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/games"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/gamesLable"
-                app:layout_constraintTop_toTopOf="@+id/gamesLable"
-                tools:text="0" />
-
-            <TextView
-                android:id="@+id/winsLable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:text="Wins : "
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/games"
-                app:layout_constraintTop_toTopOf="@+id/gamesLable" />
+                app:layout_constraintHorizontal_bias="0.6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tier" />
 
             <TextView
                 android:id="@+id/wins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:text="@string/wins"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/winsLable"
-                app:layout_constraintStart_toEndOf="@+id/winsLable"
-                tools:text="0" />
-
-            <TextView
-                android:id="@+id/winRateLable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Win Rate : "
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@+id/gamesLable"
-                app:layout_constraintTop_toBottomOf="@+id/gamesLable" />
+                app:layout_constraintStart_toEndOf="@+id/games"
+                app:layout_constraintTop_toTopOf="@+id/games"/>
 
             <TextView
                 android:id="@+id/winRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/win_rate"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/winRateLable"
-                app:layout_constraintStart_toEndOf="@+id/winRateLable"
-                tools:text="0 %" />
+                app:layout_constraintStart_toStartOf="@+id/games"
+                app:layout_constraintTop_toBottomOf="@+id/games" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

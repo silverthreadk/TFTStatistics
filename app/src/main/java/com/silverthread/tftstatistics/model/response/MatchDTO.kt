@@ -26,7 +26,7 @@ class ParticipantDTO  {
     var gold_left: String? = null
     var last_round: String? = null
     var level: String? = null
-    var placement: String? = null
+    var placement: Int = 0
     var players_eliminated: String? = null
     var puuid: String? = null
     var time_eliminated: String? = null

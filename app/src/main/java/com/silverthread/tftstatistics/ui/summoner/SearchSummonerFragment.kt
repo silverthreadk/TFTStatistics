@@ -24,8 +24,7 @@ class SearchSummonerFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         _binding = FragmentSearchSummonerBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,8 +42,6 @@ class SearchSummonerFragment : Fragment() {
             val summonerName = binding.summonerInput.text.toString()
             if (summonerName.isNotBlank()) {
                 summonerViewModel.loadSummoner(summonerName)
-            } else {
-
             }
         }
 
@@ -57,7 +54,7 @@ class SearchSummonerFragment : Fragment() {
             binding.spinner.adapter = adapter
         }
 
-        binding.spinner.setOnItemSelectedListener(object : OnItemSelectedListener {
+        binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 summonerViewModel.setRegion(Region.fromId(resources.getStringArray(R.array.region_array)[position]))
             }
@@ -65,7 +62,7 @@ class SearchSummonerFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
-        })
+        }
 
         summonerViewModel.searchEventLiveData.observe(requireActivity(), Observer {
             showSummonor()

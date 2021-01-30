@@ -21,7 +21,7 @@ class ItemAdapter(private val items: MutableList<String>): RecyclerView.Adapter<
             this.item = item
             val context = itemView.context
             binding.itemImage.setImageResource(
-                    context.resources.getIdentifier("item_"+item, "drawable", context.packageName))
+                    context.resources.getIdentifier("item_$item", "drawable", context.packageName))
         }
 
         override fun onClick(view: View?) {

@@ -14,6 +14,6 @@ enum class Region(val id:String, val platformRoutingValue:String, val RegionalRo
     RU("RU", "ru", "europe");
 
     companion object {
-        fun fromId(value: String) = Region.values().first { it.id == value }
+        fun fromId(value: String) = values().first { it.id == value }
     }
 }

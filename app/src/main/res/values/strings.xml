@@ -14,4 +14,12 @@
     </string-array>
     <string name="app_name">TFTStatistics</string>
     <string name="summoner_name">Summoner name</string>
+    <string name="level">LV. %1$d</string>
+    <string name="lp">%1$d LP</string>
+    <string name="games">Games: %1$d</string>
+    <string name="wins">Wins: %1$d</string>
+    <string name="win_rate">Win Rate: %1$d%%</string>
+    <string name="placement">#%1$d</string>
+    <string name="ranked">Ranked</string>
+    <string name="normal">Normal</string>
 </resources>

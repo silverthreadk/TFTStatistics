@@ -1,10 +1,10 @@
-package com.silverthread.tftstatistics.ui.matchHistory
+package com.silverthread.tftstatistics.ui.common
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.recyclerview.widget.RecyclerView
 
-class DividerItemDecoration(color: Int, private val heightInpixels: Int) : RecyclerView.ItemDecoration() {
+class DividerItemDecoration(color: Int, private val heightInPixels: Int) : RecyclerView.ItemDecoration() {
     private val paint = Paint()
 
     init {
@@ -21,7 +21,7 @@ class DividerItemDecoration(color: Int, private val heightInpixels: Int) : Recyc
             val child = parent.getChildAt(i)
             val params = child.layoutParams as RecyclerView.LayoutParams
             val top = child.bottom + params.bottomMargin
-            val bottom = top + heightInpixels
+            val bottom = top + heightInPixels
             c.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
         }
     }

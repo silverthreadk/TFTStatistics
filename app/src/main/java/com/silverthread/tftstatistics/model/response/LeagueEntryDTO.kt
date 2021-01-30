@@ -7,7 +7,7 @@ class LeagueEntryDTO {
     var rank: String? = null
     var summonerId: String? = null
     var summonerName: String? = null
-    var leaguePoints: String? = null
+    var leaguePoints: Int = 0
     var wins: Int = 0
     var losses: Int = 0
     var veteran: String? = null

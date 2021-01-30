@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentMatchHistoryBinding
+import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 
 class MatchHistoryFragment  : Fragment() {
@@ -24,8 +25,7 @@ class MatchHistoryFragment  : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         _binding = FragmentMatchHistoryBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +35,12 @@ class MatchHistoryFragment  : Fragment() {
 
         val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
         context?.let{
-            binding.matchHistoryRecyclerView.addItemDecoration(DividerItemDecoration(ContextCompat.getColor(it, R.color.rarity_0), heightInPixels))
+            binding.matchHistoryRecyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    ContextCompat.getColor(it, R.color.rarity_0),
+                    heightInPixels
+                )
+            )
         }
 
         binding.swipeRefreshLayout.setOnRefreshListener {

@@ -1,7 +1,6 @@
 package com.silverthread.tftstatistics.ui.summoner
 
 import SingleLiveEvent
-import android.util.Log
 import androidx.lifecycle.*
 import com.silverthread.tftstatistics.App
 import com.silverthread.tftstatistics.model.Success
@@ -48,12 +47,9 @@ class SummonerViewModel: ViewModel() {
                 val result = remoteApi.getSummoner((regionLiveData.value?: Region.KR).platformRoutingValue, summonerName)
                 if (result is Success) {
                     _summonerLiveData.value = result.data.body()
-                    Log.d("loadSummoner", result.toString())
                     result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
                     _searchEventLiveData.call()
-                } else {
-                    Log.d("loadSummoner", result.toString())
                 }
                 _progressLiveData.value = 8
             }
@@ -67,11 +63,8 @@ class SummonerViewModel: ViewModel() {
                 val result = remoteApi.getSummonerByPuuid((regionLiveData.value?: Region.KR).platformRoutingValue, puuid)
                 if (result is Success) {
                     _summonerLiveData.value = result.data.body()
-                    Log.d("loadSummoner", result.toString())
                     result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
-                } else {
-                    Log.d("loadSummoner", result.toString())
                 }
                 _progressLiveData.value = 8
             }
@@ -83,21 +76,15 @@ class SummonerViewModel: ViewModel() {
         if (result is Success) {
             if (result.data.body().isNullOrEmpty()) return
             _leagueEntryLiveData.value = result.data.body()?.first()
-            Log.d("loadTFTLegueBySummoner", result.toString())
-        } else {
-            Log.d("loadTFTLegueBySummoner", result.toString())
         }
     }
 
-    suspend fun loadMatch(matchId: String, matchesList: MutableList<MatchDTO>) {
+    private suspend fun loadMatch(matchId: String, matchesList: MutableList<MatchDTO>) {
         val result = remoteApi.getMatch((regionLiveData.value?: Region.KR).RegionalRoutingValue, matchId)
         if (result is Success) {
             result.data.body()?.let {
                 matchesList.add(it)
             }
-            Log.d("loadMatch", result.toString())
-        } else {
-            Log.d("loadMatch", result.toString())
         }
     }
 
@@ -111,9 +98,6 @@ class SummonerViewModel: ViewModel() {
                 }
                 _matchLiveData.value = matchesList
             }
-            Log.d("loadMatches", result.toString())
-        } else {
-            Log.d("loadMatches", result.toString())
         }
     }
 }

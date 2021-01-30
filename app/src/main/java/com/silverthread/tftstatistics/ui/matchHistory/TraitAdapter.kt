@@ -32,7 +32,7 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
                     context.resources.getIdentifier("trait_" + traitName, "drawable", context.packageName))
             val color = context.resources.getIdentifier("trait_" + trait.style, "color", context.packageName)
             val csl = context.resources.getColorStateList(color)
-            binding.traitImage.setImageTintList(csl)
+            binding.traitImage.imageTintList = csl
         }
 
         override fun onClick(view: View?) {

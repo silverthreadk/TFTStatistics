@@ -7,5 +7,5 @@ class SummonerDTO {
     var name: String? = null
     var puuid: String? = null
     var id: String? = null
-    var summonerLevel: String? = null
+    var summonerLevel: Int = 0
 }
