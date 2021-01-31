@@ -1,4 +1,4 @@
-package com.silverthread.tftstatistics.ui.summoner
+package com.silverthread.tftstatistics.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,8 @@ import androidx.navigation.findNavController
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentSearchSummonerBinding
 import com.silverthread.tftstatistics.model.constants.Region
+import com.silverthread.tftstatistics.ui.search.SearchSummonerFragmentDirections
+import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 
 class SearchSummonerFragment : Fragment() {
 

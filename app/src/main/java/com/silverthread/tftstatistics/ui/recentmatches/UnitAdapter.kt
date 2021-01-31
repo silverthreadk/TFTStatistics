@@ -1,4 +1,4 @@
-package com.silverthread.tftstatistics.ui.matchHistory
+package com.silverthread.tftstatistics.ui.recentmatches
 
 import android.view.LayoutInflater
 import android.view.View

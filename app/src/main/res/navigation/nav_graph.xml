@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchSummonerFragment"
-        android:name="com.silverthread.tftstatistics.ui.summoner.SearchSummonerFragment"
+        android:name="com.silverthread.tftstatistics.ui.search.SearchSummonerFragment"
         android:label="TodoListFragment">
         <action
             android:id="@+id/action_SearchSummonerFragment_to_SummonerTabFragment"

@@ -1,4 +1,4 @@
-package com.silverthread.tftstatistics.ui.matchHistory
+package com.silverthread.tftstatistics.ui.recentmatches
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import com.silverthread.tftstatistics.model.response.UnitDTO
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MatchHistoryAdapter(private val matches: MutableList<MatchDTO>): RecyclerView.Adapter<MatchHistoryAdapter.ViewHolder>() {
+class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerView.Adapter<RecentMachesAdapter.ViewHolder>() {
     private var puuid = ""
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {

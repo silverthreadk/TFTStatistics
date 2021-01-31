@@ -1,4 +1,4 @@
-package com.silverthread.tftstatistics.ui.matchHistory
+package com.silverthread.tftstatistics.ui.recentmatches
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,13 +14,13 @@ import com.silverthread.tftstatistics.databinding.FragmentMatchHistoryBinding
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 
-class MatchHistoryFragment  : Fragment() {
+class RecentMachesFragment  : Fragment() {
 
     private var _binding: FragmentMatchHistoryBinding? = null
     private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
 
-    private val adapter = MatchHistoryAdapter(mutableListOf())
+    private val adapter = RecentMachesAdapter(mutableListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
