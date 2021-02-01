@@ -18,8 +18,14 @@
     <string name="lp">%1$d LP</string>
     <string name="games">Games: %1$d</string>
     <string name="wins">Wins: %1$d</string>
-    <string name="win_rate">Win Rate: %1$d%%</string>
+    <string name="win_rate">Win Rate: %1$.2f%%</string>
     <string name="placement">#%1$d</string>
     <string name="ranked">Ranked</string>
     <string name="normal">Normal</string>
+    <string name="unit">Unit</string>
+    <string name="games_label">Games</string>
+    <string name="place_label">Place</string>
+    <string name="top4_label">Top4</string>
+    <string name="win_label">Win</string>
+    <string name="percent">%1$.2f%%</string>
 </resources>

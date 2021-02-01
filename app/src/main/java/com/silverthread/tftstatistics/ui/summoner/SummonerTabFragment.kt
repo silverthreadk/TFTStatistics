@@ -60,7 +60,7 @@ class SummonerTabFragment : Fragment() {
             binding.summoner.leaguePoints.text = String.format(resources.getString(R.string.lp), leagueEntry.leaguePoints)
             binding.summoner.games.text = String.format(resources.getString(R.string.games), (leagueEntry.wins + leagueEntry.losses))
             binding.summoner.wins.text = String.format(resources.getString(R.string.wins), leagueEntry.wins)
-            binding.summoner.winRate.text = String.format(resources.getString(R.string.win_rate), (100 * leagueEntry.wins / (leagueEntry.wins + leagueEntry.losses)))
+            binding.summoner.winRate.text = String.format(resources.getString(R.string.win_rate), (100f * leagueEntry.wins / (leagueEntry.wins + leagueEntry.losses)))
         })
         summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->
             binding.summoner.region.text = region.id

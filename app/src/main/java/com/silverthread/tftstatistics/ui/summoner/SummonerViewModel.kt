@@ -3,13 +3,18 @@ package com.silverthread.tftstatistics.ui.summoner
 import SingleLiveEvent
 import androidx.lifecycle.*
 import com.silverthread.tftstatistics.App
+import com.silverthread.tftstatistics.model.CompositeItem
+import com.silverthread.tftstatistics.model.Header
+import com.silverthread.tftstatistics.model.StatData
 import com.silverthread.tftstatistics.model.Success
 import com.silverthread.tftstatistics.model.constants.Region
 import com.silverthread.tftstatistics.model.response.LeagueEntryDTO
 import com.silverthread.tftstatistics.model.response.MatchDTO
 import com.silverthread.tftstatistics.model.response.SummonerDTO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SummonerViewModel: ViewModel() {
     private val remoteApi = App.remoteApi
@@ -25,6 +30,9 @@ class SummonerViewModel: ViewModel() {
     private val _matchLiveData = MutableLiveData<List<MatchDTO>>()
     val matchLiveData : LiveData<List<MatchDTO>>
         get() = _matchLiveData
+    private val _unitStatLiveData = MutableLiveData<List<CompositeItem>>()
+    val unitStatLiveData : LiveData<List<CompositeItem>>
+        get() = _unitStatLiveData
     private val _progressLiveData = MutableLiveData<Int>()
     val progressLiveData : LiveData<Int>
         get() = _progressLiveData
@@ -97,7 +105,37 @@ class SummonerViewModel: ViewModel() {
                     (loadMatch(matchId, matchesList))
                 }
                 _matchLiveData.value = matchesList
+                loadStat(puuid)
             }
+        }
+    }
+
+    private suspend fun loadStat(puuid: String) {
+        if (matchLiveData.value.isNullOrEmpty()) return
+        withContext(Dispatchers.Default){
+            val m = mutableMapOf<String, StatData>()
+            matchLiveData.value!!.forEach { match ->
+                match.info?.participants?.filter { participant ->
+                    participant.puuid == puuid
+                }?.forEach{ summoner ->
+                    val isWin = summoner.placement == 1
+                    val isTop4 = summoner.placement >= 4
+                    summoner.units?.forEach { unit->
+                        val s = m.getOrDefault(unit.character_id, StatData())
+                        s.rarity = unit.rarity.toString()
+                        s.games += 1
+                        s.name = unit.character_id.toString()
+                        s.place += summoner.placement
+                        if (isWin) s.wins += 1
+                        if (isTop4) s.top4 += 1
+                        m.put(unit.character_id!!, s)
+                    }
+                }
+            }
+            val list = mutableListOf<CompositeItem>()
+            list.add(CompositeItem.withHeader(Header()))
+            list.addAll(m.values.toList().sortedByDescending { it.games }.map{CompositeItem.withStatData(it)})
+            _unitStatLiveData.postValue(list)
         }
     }
 }
