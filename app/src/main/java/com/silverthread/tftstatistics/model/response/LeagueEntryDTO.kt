@@ -3,8 +3,8 @@ package com.silverthread.tftstatistics.model.response
 class LeagueEntryDTO {
     var leagueId: String? = null
     var queueType: String? = null
-    var tier: String? = "unranked"
-    var rank: String? = null
+    var tier: String = "Unranked"
+    var rank: String = ""
     var summonerId: String? = null
     var summonerName: String? = null
     var leaguePoints: Int = 0

@@ -82,8 +82,13 @@ class SummonerViewModel: ViewModel() {
     private suspend fun loadTFTLegueBySummoner(encryptedSummonerId: String) {
         val result = remoteApi.getTFTLegueBySummoner((regionLiveData.value?: Region.KR).platformRoutingValue, encryptedSummonerId)
         if (result is Success) {
-            if (result.data.body().isNullOrEmpty()) return
+            if (result.data.body().isNullOrEmpty()) {
+                _leagueEntryLiveData.value = LeagueEntryDTO()
+                return
+            }
             _leagueEntryLiveData.value = result.data.body()?.first()
+        } else {
+            _leagueEntryLiveData.value = LeagueEntryDTO()
         }
     }
 
