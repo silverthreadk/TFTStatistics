@@ -3,10 +3,11 @@ package com.silverthread.tftstatistics.networking
 import com.silverthread.tftstatistics.BuildConfig
 import com.silverthread.tftstatistics.model.Failure
 import com.silverthread.tftstatistics.model.Success
+import javax.inject.Inject
 
 const val API_KEY = BuildConfig.ApiKey
 
-class RemoteApi(private val apiService: RemoteApiService) {
+class RemoteApi constructor(private val apiService: RemoteApiService) {
     suspend fun getSummoner(platform: String, summonerName: String) = try {
         val data = apiService.getSummoner(platform, summonerName, API_KEY)
 

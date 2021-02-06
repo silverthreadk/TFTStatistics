@@ -14,11 +14,10 @@ import androidx.navigation.findNavController
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentSearchSummonerBinding
 import com.silverthread.tftstatistics.model.constants.Region
-import com.silverthread.tftstatistics.ui.search.SearchSummonerFragmentDirections
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
+import com.silverthread.tftstatistics.util.EventObserver
 
 class SearchSummonerFragment : Fragment() {
-
     private var _binding: FragmentSearchSummonerBinding? = null
     private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
@@ -66,7 +65,7 @@ class SearchSummonerFragment : Fragment() {
             }
         }
 
-        summonerViewModel.searchEventLiveData.observe(requireActivity(), Observer {
+        summonerViewModel.searchEventLiveData.observe(requireActivity(), EventObserver {
             showSummonor()
         })
         summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->

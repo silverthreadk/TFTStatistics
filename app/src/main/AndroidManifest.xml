@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
+        android:name=".App"
         android:theme="@style/Theme.TFTStatistics">
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>

@@ -1,8 +1,8 @@
 package com.silverthread.tftstatistics.ui.summoner
 
-import SingleLiveEvent
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.silverthread.tftstatistics.App
 import com.silverthread.tftstatistics.model.CompositeItem
 import com.silverthread.tftstatistics.model.Header
 import com.silverthread.tftstatistics.model.StatData
@@ -11,13 +11,14 @@ import com.silverthread.tftstatistics.model.constants.Region
 import com.silverthread.tftstatistics.model.response.LeagueEntryDTO
 import com.silverthread.tftstatistics.model.response.MatchDTO
 import com.silverthread.tftstatistics.model.response.SummonerDTO
+import com.silverthread.tftstatistics.networking.RemoteApi
+import com.silverthread.tftstatistics.util.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SummonerViewModel: ViewModel() {
-    private val remoteApi = App.remoteApi
+class SummonerViewModel @ViewModelInject constructor(private val remoteApi: RemoteApi, @Assisted private val savedStateHandle: SavedStateHandle): ViewModel() {
     private val _regionLiveData = MutableLiveData<Region>()
     val regionLiveData : LiveData<Region>
         get() = _regionLiveData
@@ -36,8 +37,8 @@ class SummonerViewModel: ViewModel() {
     private val _progressLiveData = MutableLiveData<Int>()
     val progressLiveData : LiveData<Int>
         get() = _progressLiveData
-    private val _searchEventLiveData = SingleLiveEvent<Void>()
-    val searchEventLiveData : LiveData<Void>
+    private val _searchEventLiveData = MutableLiveData<Event<Unit>>()
+    val searchEventLiveData : LiveData<Event<Unit>>
         get() = _searchEventLiveData
 
     init {
@@ -57,7 +58,7 @@ class SummonerViewModel: ViewModel() {
                     _summonerLiveData.value = result.data.body()
                     result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
-                    _searchEventLiveData.call()
+                    _searchEventLiveData.value = Event(Unit)
                 }
                 _progressLiveData.value = 8
             }
