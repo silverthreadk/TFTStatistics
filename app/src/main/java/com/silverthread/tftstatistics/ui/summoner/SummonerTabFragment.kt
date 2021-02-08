@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentSummonerTabBinding
 
@@ -16,12 +17,6 @@ class SummonerTabFragment : Fragment() {
     private var _binding: FragmentSummonerTabBinding? = null
     private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
-
-    private val pagerAdapter by lazy {
-        SummonerPagerAdapter(
-            childFragmentManager
-        )
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,8 +35,13 @@ class SummonerTabFragment : Fragment() {
     }
 
     private fun setupUI() {
-        binding.tabs.setupWithViewPager(binding.fragmentPager)
-        binding.fragmentPager.adapter = pagerAdapter
+        binding.fragmentPager.adapter = SummonerPagerAdapter(this)
+        TabLayoutMediator(binding.tabs, binding.fragmentPager, { tab, position ->
+            when (position) {
+                0 -> tab.text = "Recent Matches"
+                1 -> tab.text = "Units"
+            }
+        }).attach()
 
         summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
             binding.summoner.level.text = String.format(resources.getString(R.string.level), summoner.summonerLevel)
