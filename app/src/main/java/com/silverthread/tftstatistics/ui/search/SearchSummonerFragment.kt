@@ -1,9 +1,12 @@
 package com.silverthread.tftstatistics.ui.search
 
+import android.content.Context
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
@@ -44,6 +47,7 @@ class SearchSummonerFragment : Fragment() {
             if (summonerName.isNotBlank()) {
                 summonerViewModel.loadSummoner(summonerName)
             }
+            dismissKeyboard(it.windowToken)
         }
 
         ArrayAdapter.createFromResource(
@@ -78,5 +82,10 @@ class SearchSummonerFragment : Fragment() {
             val action = SearchSummonerFragmentDirections.actionSearchSummonerFragmentToSummonerTabFragment()
             it.findNavController().navigate(action)
         }
+    }
+
+    private fun dismissKeyboard(windowToken: IBinder) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(windowToken, 0)
     }
 }
