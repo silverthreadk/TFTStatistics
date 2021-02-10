@@ -3,9 +3,11 @@ package com.silverthread.tftstatistics.ui.search
 import android.content.Context
 import android.os.Bundle
 import android.os.IBinder
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -42,13 +44,11 @@ class SearchSummonerFragment : Fragment() {
     }
 
     private fun initUi() {
-        binding.searchButton.setOnClickListener {
-            val summonerName = binding.summonerInput.text.toString()
-            if (summonerName.isNotBlank()) {
-                summonerViewModel.loadSummoner(summonerName)
-            }
-            dismissKeyboard(it.windowToken)
+        binding.search.setOnClickListener {
+            search(it)
         }
+
+        setupSearchInputListener()
 
         ArrayAdapter.createFromResource(
                 context!!,
@@ -75,6 +75,33 @@ class SearchSummonerFragment : Fragment() {
         summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->
             binding.spinner.setSelection(region.ordinal, false)
         })
+    }
+
+    private fun setupSearchInputListener(){
+        binding.summonerInput.setOnEditorActionListener { view: View, actionId: Int, _: KeyEvent? ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                search(view)
+                true
+            } else {
+                false
+            }
+        }
+        binding.summonerInput.setOnKeyListener { view: View, keyCode: Int, event: KeyEvent ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                search(view)
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun search(view: View){
+        val summonerName = binding.summonerInput.text.toString()
+        if (summonerName.isNotBlank()) {
+            summonerViewModel.loadSummoner(summonerName)
+        }
+        dismissKeyboard(view.windowToken)
     }
 
     private fun showSummonor(){
