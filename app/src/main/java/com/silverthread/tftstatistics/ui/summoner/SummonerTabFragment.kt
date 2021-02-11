@@ -40,6 +40,7 @@ class SummonerTabFragment : Fragment() {
             when (position) {
                 0 -> tab.text = "Recent Matches"
                 1 -> tab.text = "Units"
+                2 -> tab.text = "Traits"
             }
         }).attach()
 

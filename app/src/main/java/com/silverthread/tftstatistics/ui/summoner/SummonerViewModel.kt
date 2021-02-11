@@ -34,6 +34,9 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
     private val _unitStatLiveData = MutableLiveData<List<CompositeItem>>()
     val unitStatLiveData : LiveData<List<CompositeItem>>
         get() = _unitStatLiveData
+    private val _traitStatLiveData = MutableLiveData<List<CompositeItem>>()
+    val traitStatLiveData : LiveData<List<CompositeItem>>
+        get() = _traitStatLiveData
     private val _progressLiveData = MutableLiveData<Int>()
     val progressLiveData : LiveData<Int>
         get() = _progressLiveData
@@ -117,31 +120,54 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
     }
 
     private suspend fun loadStat(puuid: String) {
-        if (matchLiveData.value.isNullOrEmpty()) return
+        if (_matchLiveData.value.isNullOrEmpty()) return
         withContext(Dispatchers.Default){
-            val m = mutableMapOf<String, StatData>()
-            matchLiveData.value!!.forEach { match ->
-                match.info?.participants?.filter { participant ->
-                    participant.puuid == puuid
-                }?.forEach{ summoner ->
+            val unitMap = mutableMapOf<String, StatData>()
+            val traitMap = mutableMapOf<String, StatData>()
+            _matchLiveData.value?.forEach { match ->
+                val participaint = match.info?.participants?.find { participant ->
+                    participant.puuid == puuid }
+
+                participaint?.let{ summoner ->
                     val isWin = summoner.placement == 1
                     val isTop4 = summoner.placement >= 4
+
                     summoner.units?.forEach { unit->
-                        val s = m.getOrDefault(unit.character_id, StatData())
+                        val s = unitMap.getOrDefault(unit.character_id, StatData())
                         s.rarity = unit.rarity.toString()
                         s.games += 1
                         s.name = unit.character_id.toString()
                         s.place += summoner.placement
                         if (isWin) s.wins += 1
                         if (isTop4) s.top4 += 1
-                        m.put(unit.character_id!!, s)
+                        unitMap.put(unit.character_id!!, s)
+                    }
+
+                    summoner.traits?.
+                    filter{it.style != 0}?.
+                    forEach{ trait->
+                        val key = trait.name + " " + trait.style
+                        val s = traitMap.getOrDefault(key, StatData())
+                        s.games += 1
+                        s.name = trait.name.toString()
+                        s.place += summoner.placement
+                        s.style = trait.style
+                        if (isWin) s.wins += 1
+                        if (isTop4) s.top4 += 1
+                        traitMap.put(key, s)
                     }
                 }
             }
-            val list = mutableListOf<CompositeItem>()
-            list.add(CompositeItem.withHeader(Header()))
-            list.addAll(m.values.toList().sortedByDescending { it.games }.map{CompositeItem.withStatData(it)})
-            _unitStatLiveData.postValue(list)
+
+            updateStat(_unitStatLiveData, unitMap)
+            updateStat(_traitStatLiveData, traitMap)
         }
+    }
+
+    private fun updateStat(liveData: MutableLiveData<List<CompositeItem>>, m: Map<String, StatData>){
+        val list = mutableListOf<CompositeItem>()
+        list.add(CompositeItem.withHeader(Header()))
+        list.addAll(m.values.toList().sortedByDescending { it.games }.map{CompositeItem.withStatData(it)})
+        liveData.postValue(list)
     }
 }

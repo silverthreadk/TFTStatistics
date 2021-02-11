@@ -1,4 +1,4 @@
-package com.silverthread.tftstatistics.ui.unit
+package com.silverthread.tftstatistics.ui.trait
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,12 +14,12 @@ import com.silverthread.tftstatistics.databinding.FragmentStatBinding
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 
-class UnitStatFragment: Fragment() {
+class TraitStatFragment: Fragment() {
 
     private var _binding : FragmentStatBinding? = null
     private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
-    private val adapter = UnitStatsAdapter(mutableListOf())
+    private val adapter = TraitStatsAdapter(mutableListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -49,8 +49,8 @@ class UnitStatFragment: Fragment() {
             }
         })
 
-        summonerViewModel.unitStatLiveData.observe(requireActivity(), Observer { units ->
-            adapter.updateUnitStat(units)
+        summonerViewModel.traitStatLiveData.observe(requireActivity(), Observer { traits ->
+            adapter.updateTraitStat(traits)
         })
     }
 

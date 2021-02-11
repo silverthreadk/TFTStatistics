@@ -22,6 +22,7 @@
     <string name="placement">#%1$d</string>
     <string name="ranked">Ranked</string>
     <string name="normal">Normal</string>
+    <string name="trait">Trait</string>
     <string name="unit">Unit</string>
     <string name="games_label">Games</string>
     <string name="place_label">Place</string>

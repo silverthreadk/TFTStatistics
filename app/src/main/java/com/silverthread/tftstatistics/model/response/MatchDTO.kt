@@ -43,9 +43,9 @@ class CompanionDTO  {
 
 class TraitDTO  {
     var name: String? = null
-    var num_units: String? = null
-    var style: String? = null
-    var tier_current: String? = null
+    var num_units: Int = 0
+    var style: Int = 0
+    var tier_current: Int = 0
     var tier_total: String? = null
 }
 

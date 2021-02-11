@@ -69,7 +69,7 @@ class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             binding.TraitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
             binding.TraitRecyclerView.adapter = traitAdapter
-            traitAdapter.updateTraits(traits.filter{it.style != "0"}.map{it})
+            traitAdapter.updateTraits(traits.filter{it.style != 0}.map{it})
         }
     }
 

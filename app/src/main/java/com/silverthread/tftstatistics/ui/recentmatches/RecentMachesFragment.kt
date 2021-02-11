@@ -43,15 +43,21 @@ class RecentMachesFragment  : Fragment() {
             )
         }
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            summonerViewModel.summonerLiveData.value?.puuid?.let{
-                summonerViewModel.loadSummonerByPuuid(it)
+        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer {
+            it.puuid?.let{
+                refresh(it)
             }
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
+        })
 
         summonerViewModel.matchLiveData.observe(requireActivity(), Observer { match ->
             adapter.updateMatchHistory(match, summonerViewModel.summonerLiveData.value?.puuid?:"")
         })
+    }
+
+    private fun refresh(id: String){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            summonerViewModel.loadSummonerByPuuid(id)
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 }
