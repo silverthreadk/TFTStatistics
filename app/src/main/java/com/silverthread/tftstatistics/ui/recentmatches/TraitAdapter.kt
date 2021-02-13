@@ -31,7 +31,7 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
             binding.traitImage.setImageResource(
                     context.resources.getIdentifier("trait_" + traitName, "drawable", context.packageName))
             val color = context.resources.getIdentifier("trait_" + trait.style, "color", context.packageName)
-            val csl = context.resources.getColorStateList(color)
+            val csl = context.getColorStateList(color)
             binding.traitImage.imageTintList = csl
         }
 

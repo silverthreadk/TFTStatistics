@@ -43,8 +43,8 @@ class TraitStatFragment: Fragment() {
             )
         }
 
-        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer {
-            it.puuid?.let{
+        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
+            summoner.puuid?.let{
                 refresh(it)
             }
         })

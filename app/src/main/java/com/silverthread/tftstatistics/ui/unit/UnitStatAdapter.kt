@@ -13,7 +13,6 @@ import com.silverthread.tftstatistics.util.margin
 
 
 class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): RecyclerView.Adapter<UnitStatsAdapter.ViewHolder>() {
-    private var puuid = ""
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private var binding = ListItemUnitStatBinding.bind(itemView)
@@ -52,7 +51,7 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
             val context = itemView.context
             lateinit var charId: String
             lateinit var charName: String
-            unit.name?.let{
+            unit.name.let{
                 if (it.startsWith("TFT4b_")) {
                     charName = it.substring(6)
                     charId = "tft4_" + charName.toLowerCase()
@@ -94,7 +93,6 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
         } else{
             ViewType.UNIT.ordinal
         }
-        return super.getItemViewType(position)
     }
 
     fun updateUnitStat(compositeItems: List<CompositeItem>) {

@@ -1,4 +1,3 @@
 package com.silverthread.tftstatistics.model
 
-class Header {
-}
+class Header

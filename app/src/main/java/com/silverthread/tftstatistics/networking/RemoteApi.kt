@@ -3,7 +3,6 @@ package com.silverthread.tftstatistics.networking
 import com.silverthread.tftstatistics.BuildConfig
 import com.silverthread.tftstatistics.model.Failure
 import com.silverthread.tftstatistics.model.Success
-import javax.inject.Inject
 
 const val API_KEY = BuildConfig.ApiKey
 

@@ -40,7 +40,7 @@ class StarView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        size = Math.min(measuredWidth, measuredHeight)
+        size = minOf(measuredWidth, measuredHeight)
         setMeasuredDimension(size, size)
     }
 

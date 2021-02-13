@@ -20,7 +20,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideApiService(): RemoteApiService {
-        val OkHttpClient = OkHttpClient.Builder()
+        val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 })
@@ -29,7 +29,7 @@ object NetworkModule {
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .build()
         return Retrofit.Builder()
-            .client(OkHttpClient)
+            .client(okHttpClient)
             .baseUrl("https://ddragon.leagueoflegends.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(RemoteApiService::class.java)

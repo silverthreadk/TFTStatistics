@@ -51,7 +51,7 @@ class SearchSummonerFragment : Fragment() {
         setupSearchInputListener()
 
         ArrayAdapter.createFromResource(
-                context!!,
+                requireContext(),
                 R.array.region_array,
                 android.R.layout.simple_spinner_item
         ).also { adapter ->

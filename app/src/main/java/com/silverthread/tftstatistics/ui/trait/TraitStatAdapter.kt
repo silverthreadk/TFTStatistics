@@ -13,7 +13,6 @@ import com.silverthread.tftstatistics.util.margin
 
 
 class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): RecyclerView.Adapter<TraitStatsAdapter.ViewHolder>() {
-    private var puuid = ""
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private var binding = ListItemTraitStatBinding.bind(itemView)
@@ -52,7 +51,7 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
             val context = itemView.context
             lateinit var traitId: String
             lateinit var traitName: String
-            trait.name?.let{
+            trait.name.let{
                 if (it.startsWith("Set4_")){
                     traitName = it.substring(5)
                     traitId = "trait_" + it.substring(5).toLowerCase()
@@ -95,7 +94,6 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
         } else{
             ViewType.UNIT.ordinal
         }
-        return super.getItemViewType(position)
     }
 
     fun updateTraitStat(compositeItems: List<CompositeItem>) {

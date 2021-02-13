@@ -36,13 +36,13 @@ class SummonerTabFragment : Fragment() {
 
     private fun setupUI() {
         binding.fragmentPager.adapter = SummonerPagerAdapter(this)
-        TabLayoutMediator(binding.tabs, binding.fragmentPager, { tab, position ->
+        TabLayoutMediator(binding.tabs, binding.fragmentPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "Recent Matches"
                 1 -> tab.text = "Units"
                 2 -> tab.text = "Traits"
             }
-        }).attach()
+        }.attach()
 
         summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
             binding.summoner.level.text = String.format(resources.getString(R.string.level), summoner.summonerLevel)
@@ -55,7 +55,7 @@ class SummonerTabFragment : Fragment() {
         })
         summonerViewModel.leagueEntryLiveData.observe(requireActivity(), Observer { leagueEntry ->
             binding.summoner.tier.text = "${leagueEntry.tier} ${leagueEntry.rank}"
-            val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier?.toLowerCase(), "drawable", requireContext().packageName)
+            val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier.toLowerCase(), "drawable", requireContext().packageName)
             binding.summoner.tierIcon.setImageResource(tierResource)
             binding.summoner.leaguePoints.text = String.format(resources.getString(R.string.lp), leagueEntry.leaguePoints)
             binding.summoner.games.text = String.format(resources.getString(R.string.games), (leagueEntry.wins + leagueEntry.losses))
