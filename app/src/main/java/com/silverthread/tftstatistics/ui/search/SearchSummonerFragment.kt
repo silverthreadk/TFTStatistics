@@ -21,6 +21,7 @@ import com.silverthread.tftstatistics.databinding.FragmentSearchSummonerBinding
 import com.silverthread.tftstatistics.model.constants.Region
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 import com.silverthread.tftstatistics.util.EventObserver
+import com.silverthread.tftstatistics.util.dismissKeyboard
 
 class SearchSummonerFragment : Fragment() {
     private var _binding: FragmentSearchSummonerBinding? = null
@@ -109,10 +110,5 @@ class SearchSummonerFragment : Fragment() {
             val action = SearchSummonerFragmentDirections.actionSearchSummonerFragmentToSummonerTabFragment()
             it.findNavController().navigate(action)
         }
-    }
-
-    private fun dismissKeyboard(windowToken: IBinder) {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(windowToken, 0)
     }
 }

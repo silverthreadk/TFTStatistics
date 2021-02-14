@@ -1,9 +1,11 @@
 package com.silverthread.tftstatistics.ui.summoner
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.IBinder
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -11,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentSummonerTabBinding
+import com.silverthread.tftstatistics.ui.main.MainActivity
+import com.silverthread.tftstatistics.util.dismissKeyboard
 
 class SummonerTabFragment : Fragment() {
 
@@ -20,6 +24,7 @@ class SummonerTabFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         _binding = FragmentSummonerTabBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -32,6 +37,40 @@ class SummonerTabFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        summonerViewModel.regionLiveData.removeObservers(requireActivity())
+        summonerViewModel.summonerLiveData.removeObservers(requireActivity())
+        summonerViewModel.leagueEntryLiveData.removeObservers(requireActivity())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.menu, menu)
+        val searchView = SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
+        menu.findItem(R.id.search).apply {
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            actionView = searchView
+        }
+        searchView.setIconifiedByDefault(false)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                search(searchView, searchView.query.toString())
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+
+        searchView.setOnClickListener { view ->
+            search(view, searchView.query.toString())
+        }
     }
 
     private fun setupUI() {
@@ -72,11 +111,11 @@ class SummonerTabFragment : Fragment() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        summonerViewModel.regionLiveData.removeObservers(requireActivity())
-        summonerViewModel.summonerLiveData.removeObservers(requireActivity())
-        summonerViewModel.leagueEntryLiveData.removeObservers(requireActivity())
-    }
 
+    private fun search(view: View, summonerName: String){
+        if (summonerName.isNotBlank()) {
+            summonerViewModel.loadSummoner(summonerName)
+        }
+        dismissKeyboard(view.windowToken)
+    }
 }
