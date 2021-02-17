@@ -58,9 +58,9 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                 _progressLiveData.value = 0
                 val result = remoteApi.getSummoner((regionLiveData.value?: Region.KR).platformRoutingValue, summonerName)
                 if (result is Success) {
-                    _summonerLiveData.value = result.data.body()
-                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
+                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
+                    _summonerLiveData.value = result.data.body()
                     _searchEventLiveData.value = Event(Unit)
                 }
                 _progressLiveData.value = 8
@@ -74,9 +74,9 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                 _progressLiveData.value = 0
                 val result = remoteApi.getSummonerByPuuid((regionLiveData.value?: Region.KR).platformRoutingValue, puuid)
                 if (result is Success) {
-                    _summonerLiveData.value = result.data.body()
-                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
                     result.data.body()?.puuid?.let { loadMatches(it) }
+                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
+                    _summonerLiveData.value = result.data.body()
                 }
                 _progressLiveData.value = 8
             }
