@@ -43,13 +43,13 @@ class TraitStatFragment: Fragment() {
             )
         }
 
-        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
+        summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
             summoner.puuid?.let{
                 refresh(it)
             }
         })
 
-        summonerViewModel.traitStatLiveData.observe(requireActivity(), Observer { traits ->
+        summonerViewModel.traitStatLiveData.observe(getViewLifecycleOwner(), Observer { traits ->
             adapter.updateTraitStat(traits)
         })
     }

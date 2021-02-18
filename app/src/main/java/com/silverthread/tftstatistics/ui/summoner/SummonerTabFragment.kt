@@ -39,13 +39,6 @@ class SummonerTabFragment : Fragment() {
         _binding = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        summonerViewModel.regionLiveData.removeObservers(requireActivity())
-        summonerViewModel.summonerLiveData.removeObservers(requireActivity())
-        summonerViewModel.leagueEntryLiveData.removeObservers(requireActivity())
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
@@ -83,7 +76,7 @@ class SummonerTabFragment : Fragment() {
             }
         }.attach()
 
-        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
+        summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
             binding.summoner.level.text = String.format(resources.getString(R.string.level), summoner.summonerLevel)
             binding.summoner.summonerName.text = summoner.name
             val url = "http://ddragon.leagueoflegends.com/cdn/10.25.1/img/profileicon/${summoner.profileIconId}.png"
@@ -92,7 +85,7 @@ class SummonerTabFragment : Fragment() {
                     .circleCrop()
                     .into(binding.summoner.summonerIcon)
         })
-        summonerViewModel.leagueEntryLiveData.observe(requireActivity(), Observer { leagueEntry ->
+        summonerViewModel.leagueEntryLiveData.observe(getViewLifecycleOwner(), Observer { leagueEntry ->
             binding.summoner.tier.text = "${leagueEntry.tier} ${leagueEntry.rank}"
             val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier.toLowerCase(), "drawable", requireContext().packageName)
             binding.summoner.tierIcon.setImageResource(tierResource)
@@ -106,7 +99,7 @@ class SummonerTabFragment : Fragment() {
             }
             binding.summoner.winRate.text = String.format(resources.getString(R.string.win_rate), winRate)
         })
-        summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->
+        summonerViewModel.regionLiveData.observe(getViewLifecycleOwner(), Observer { region ->
             binding.summoner.region.text = region.id
         })
     }

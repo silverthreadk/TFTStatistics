@@ -70,10 +70,10 @@ class SearchSummonerFragment : Fragment() {
             }
         }
 
-        summonerViewModel.searchEventLiveData.observe(requireActivity(), EventObserver {
+        summonerViewModel.searchEventLiveData.observe(getViewLifecycleOwner(), EventObserver {
             showSummonor()
         })
-        summonerViewModel.regionLiveData.observe(requireActivity(), Observer { region ->
+        summonerViewModel.regionLiveData.observe(getViewLifecycleOwner(), Observer { region ->
             binding.spinner.setSelection(region.ordinal, false)
         })
     }

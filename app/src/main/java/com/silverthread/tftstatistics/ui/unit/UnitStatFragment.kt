@@ -43,13 +43,13 @@ class UnitStatFragment: Fragment() {
             )
         }
 
-        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
+        summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
             summoner.puuid?.let{
                 refresh(it)
             }
         })
 
-        summonerViewModel.unitStatLiveData.observe(requireActivity(), Observer { units ->
+        summonerViewModel.unitStatLiveData.observe(getViewLifecycleOwner(), Observer { units ->
             adapter.updateUnitStat(units)
         })
     }

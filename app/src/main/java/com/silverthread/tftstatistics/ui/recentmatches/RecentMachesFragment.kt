@@ -43,13 +43,13 @@ class RecentMachesFragment  : Fragment() {
             )
         }
 
-        summonerViewModel.summonerLiveData.observe(requireActivity(), Observer { summoner ->
+        summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
             summoner.puuid?.let{
                 refresh(it)
             }
         })
 
-        summonerViewModel.matchLiveData.observe(requireActivity(), Observer { match ->
+        summonerViewModel.matchLiveData.observe(getViewLifecycleOwner(), Observer { match ->
             adapter.updateMatchHistory(match, summonerViewModel.summonerLiveData.value?.puuid?:"")
         })
     }
