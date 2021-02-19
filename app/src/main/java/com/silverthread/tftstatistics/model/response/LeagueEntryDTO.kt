@@ -1,17 +1,20 @@
 package com.silverthread.tftstatistics.model.response
 
-class LeagueEntryDTO {
-    var leagueId: String? = null
-    var queueType: String? = null
-    var tier: String = "Unranked"
-    var rank: String = ""
-    var summonerId: String? = null
-    var summonerName: String? = null
-    var leaguePoints: Int = 0
-    var wins: Int = 0
-    var losses: Int = 0
-    var veteran: String? = null
-    var inactive: String? = null
-    var freshBlood: String? = null
-    var hotStreak: String? = null
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class LeagueEntryDTO(
+    var leagueId: String="",
+    var queueType: String="",
+    var tier: String = "Unranked",
+    var rank: String = "",
+    var summonerId: String="",
+    var summonerName: String="",
+    var leaguePoints: Int = 0,
+    var wins: Int = 0,
+    var losses: Int = 0,
+    var veteran: String="",
+    var inactive: String?="",
+    var freshBlood: String="",
+    var hotStreak: String=""
+)

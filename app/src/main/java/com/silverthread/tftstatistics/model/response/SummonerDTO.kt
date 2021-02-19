@@ -1,11 +1,14 @@
 package com.silverthread.tftstatistics.model.response
 
-class SummonerDTO {
-    var accountId: String? = null
-    var profileIconId: String? = null
-    var revisionDate: String? = null
-    var name: String? = null
-    var puuid: String? = null
-    var id: String? = null
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class SummonerDTO(
+    var accountId: String="",
+    var profileIconId: String="",
+    var revisionDate: String="",
+    var name: String="",
+    var puuid: String="",
+    var id: String="",
     var summonerLevel: Int = 0
-}
+)
