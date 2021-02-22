@@ -13,6 +13,7 @@ import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentStatBinding
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
+import com.silverthread.tftstatistics.util.setupItemDecoration
 
 class UnitStatFragment: Fragment() {
 
@@ -32,16 +33,7 @@ class UnitStatFragment: Fragment() {
 
         binding.stats.layoutManager = LinearLayoutManager(requireActivity())
         binding.stats.adapter = adapter
-
-        val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
-        context?.let{
-            binding.stats.addItemDecoration(
-                    DividerItemDecoration(
-                            ContextCompat.getColor(it, R.color.rarity_0),
-                            heightInPixels
-                    )
-            )
-        }
+        context?.let { binding.stats.setupItemDecoration(it) }
 
         summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
             summoner.puuid?.let{

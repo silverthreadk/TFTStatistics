@@ -4,6 +4,10 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.silverthread.tftstatistics.R
+import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 
 fun View.margin(left: Float? = null, top: Float? = null, right: Float? = null, bottom: Float? = null) {
     layoutParams<ViewGroup.MarginLayoutParams> {
@@ -20,3 +24,8 @@ inline fun <reified T : ViewGroup.LayoutParams> View.layoutParams(block: T.() ->
 
 fun View.dpToPx(dp: Float): Int = context.dpToPx(dp)
 fun Context.dpToPx(dp: Float): Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics).toInt()
+
+fun RecyclerView.setupItemDecoration(context: Context){
+    val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
+    addItemDecoration(DividerItemDecoration(ContextCompat.getColor(context, R.color.rarity_0), heightInPixels))
+}

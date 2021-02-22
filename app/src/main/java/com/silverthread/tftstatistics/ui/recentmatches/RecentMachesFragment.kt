@@ -13,6 +13,7 @@ import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentMatchHistoryBinding
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
+import com.silverthread.tftstatistics.util.setupItemDecoration
 
 class RecentMachesFragment  : Fragment() {
 
@@ -32,16 +33,7 @@ class RecentMachesFragment  : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.matchHistoryRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.matchHistoryRecyclerView.adapter = adapter
-
-        val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
-        context?.let{
-            binding.matchHistoryRecyclerView.addItemDecoration(
-                DividerItemDecoration(
-                    ContextCompat.getColor(it, R.color.rarity_0),
-                    heightInPixels
-                )
-            )
-        }
+        context?.let { binding.matchHistoryRecyclerView.setupItemDecoration(it) }
 
         summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
             summoner.puuid?.let{
