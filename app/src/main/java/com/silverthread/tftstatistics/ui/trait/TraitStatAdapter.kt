@@ -22,7 +22,7 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
         }
 
         fun bind(item: CompositeItem) {
-            if(item.isHeader){
+            if (item.isHeader) {
                 setupHeader()
             } else {
                 setupItem(item.statData)
@@ -36,7 +36,7 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
             }
         }
 
-        private fun setupHeader(){
+        private fun setupHeader() {
             val context = itemView.context
             binding.traitImage.visibility = GONE
             binding.name.margin(left = 20f)
@@ -47,19 +47,18 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
             binding.win.text = context.resources.getString(R.string.win_label)
         }
 
-        private fun setupItem(trait: StatData){
+        private fun setupItem(trait: StatData) {
             val context = itemView.context
             lateinit var traitId: String
             lateinit var traitName: String
-            trait.name.let{
-                if (it.startsWith("Set4_")){
-                    traitName = it.substring(5)
-                    traitId = "trait_" + it.substring(5).toLowerCase()
-                } else {
-                    traitName = it
-                    traitId = "trait_" + it.toLowerCase()
-                }
+            if (trait.name.startsWith("Set4_")) {
+                traitName = trait.name.substring(5)
+                traitId = "trait_" + trait.name.substring(5).toLowerCase()
+            } else {
+                traitName = trait.name
+                traitId = "trait_" + trait.name.toLowerCase()
             }
+
             binding.traitImage.setImageResource(
                     context.resources.getIdentifier(traitId, "drawable", context.packageName))
             val color = context.resources.getIdentifier("trait_" + trait.style, "color", context.packageName)
@@ -89,9 +88,9 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(compositeItems[position].isHeader){
+        return if (compositeItems[position].isHeader) {
             ViewType.HEADER.ordinal
-        } else{
+        } else {
             ViewType.UNIT.ordinal
         }
     }

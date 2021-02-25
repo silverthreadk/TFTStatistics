@@ -4,65 +4,65 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MatchDTO(
-    var metadata: MatchDataDTO? = null,
-    var info: InfoDTO? = null
+    val metadata: MatchDataDTO = MatchDataDTO(),
+    val info: InfoDTO = InfoDTO()
 )
 
 @Serializable
 data class MatchDataDTO(
-    var data_version: String="",
-    var match_id: String="",
-    var participants: List<String>? = null
+    val data_version: String="",
+    val match_id: String="",
+    val participants: List<String> = emptyList()
 )
 
 @Serializable
 data class InfoDTO(
-    var game_datetime: String="",
-    var game_length: String="",
-    var game_variation: String="",
-    var game_version: String="",
-    var participants: List<ParticipantDTO>? = null,
-    var queue_id: String="",
-    var tft_set_number: String=""
+    val game_datetime: String = "",
+    val game_length: String = "",
+    val game_variation: String = "",
+    val game_version: String = "",
+    val participants: List<ParticipantDTO> = emptyList(),
+    val queue_id: String = "",
+    val tft_set_number: String = ""
 )
 
 @Serializable
 data class ParticipantDTO(
-    var companion: CompanionDTO? = null,
-    var gold_left: String="",
-    var last_round: String="",
-    var level: String="",
-    var placement: Int = 0,
-    var players_eliminated: String="",
-    var puuid: String? = null,
-    var time_eliminated: String="",
-    var total_damage_to_players: String="",
-    var traits: List<TraitDTO>? = null,
-    var units: List<UnitDTO>? = null
+    val companion: CompanionDTO = CompanionDTO(),
+    val gold_left: String = "",
+    val last_round: String = "",
+    val level: String = "",
+    val placement: Int = 0,
+    val players_eliminated: String = "",
+    val puuid: String = "",
+    val time_eliminated: String = "",
+    val total_damage_to_players: String = "",
+    val traits: List<TraitDTO> = emptyList(),
+    val units: List<UnitDTO> = emptyList()
 )
 
 @Serializable
 data class CompanionDTO(
-    var content_ID: String="",
-    var skin_ID: String="",
-    var species: String="",
+    var content_ID: String = "",
+    var skin_ID: String = "",
+    var species: String = "",
 )
 
 @Serializable
 data class TraitDTO(
-    var name: String="",
+    var name: String = "",
     var num_units: Int = 0,
     var style: Int = 0,
     var tier_current: Int = 0,
-    var tier_total: String=""
+    var tier_total: String = ""
 )
 
 @Serializable
 data class UnitDTO(
-    var items: List<String>? = null,
-    var character_id: String="",
-    var chosen: String="",
-    var name: String="",
-    var rarity: String="",
-    var tier: String="",
+    var items: List<String> = emptyList(),
+    var character_id: String = "",
+    var chosen: String = "",
+    var name: String = "",
+    var rarity: String = "",
+    var tier: String = "",
 )

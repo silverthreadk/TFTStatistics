@@ -4,17 +4,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LeagueEntryDTO(
-    var leagueId: String="",
-    var queueType: String="",
-    var tier: String = "Unranked",
-    var rank: String = "",
-    var summonerId: String="",
-    var summonerName: String="",
-    var leaguePoints: Int = 0,
-    var wins: Int = 0,
-    var losses: Int = 0,
-    var veteran: String="",
-    var inactive: String?="",
-    var freshBlood: String="",
-    var hotStreak: String=""
+    val leagueId: String = "",
+    val queueType: String = "",
+    val tier: String = "Unranked",
+    val rank: String = "",
+    val summonerId: String = "",
+    val summonerName: String = "",
+    val leaguePoints: Int = 0,
+    val wins: Int = 0,
+    val losses: Int = 0,
+    val veteran: String = "",
+    val inactive: String = "",
+    val freshBlood: String = "",
+    val hotStreak: String = ""
 )

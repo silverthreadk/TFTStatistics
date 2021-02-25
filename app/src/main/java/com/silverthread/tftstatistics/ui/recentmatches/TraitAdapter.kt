@@ -20,7 +20,7 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
 
         fun bind(trait: TraitDTO) {
             this.trait = trait
-            val traitName = trait.name?.let{
+            val traitName = trait.name.let{
                 if (it.startsWith("Set4_")){
                     it.substring(5).toLowerCase()
                 } else {
@@ -29,7 +29,7 @@ class TraitAdapter(private val traits: MutableList<TraitDTO>): RecyclerView.Adap
             }
             val context = itemView.context
             binding.traitImage.setImageResource(
-                    context.resources.getIdentifier("trait_" + traitName, "drawable", context.packageName))
+                    context.resources.getIdentifier("trait_$traitName", "drawable", context.packageName))
             val color = context.resources.getIdentifier("trait_" + trait.style, "color", context.packageName)
             val csl = context.getColorStateList(color)
             binding.traitImage.imageTintList = csl

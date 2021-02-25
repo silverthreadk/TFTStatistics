@@ -24,7 +24,7 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
         fun bind(unit: UnitDTO) {
             this.unit = unit
             val context = itemView.context
-            val charId = unit.character_id?.let{
+            val charId = unit.character_id.let{
                 if (it.startsWith("TFT4b_")) {
                     "tft4_" + it.substring(6).toLowerCase()
                 } else {
@@ -36,7 +36,7 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
             binding.unitImage.setBackgroundResource(
                     context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
             setupItems(unit.items)
-            setupTier(unit.tier?.toInt(), unit.rarity)
+            setupTier(unit.tier.toInt(), unit.rarity)
         }
 
         override fun onClick(view: View?) {
@@ -45,17 +45,14 @@ class UnitAdapter(private val units: MutableList<UnitDTO>): RecyclerView.Adapter
             }
         }
 
-        private fun setupItems(items: List<String>?) {
-            if (items.isNullOrEmpty()) return
+        private fun setupItems(items: List<String>) {
             binding.ItemRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 3, GridLayoutManager.VERTICAL, false)
             binding.ItemRecyclerView.adapter = itemAdapter
             itemAdapter.updateItems(items)
         }
 
-        private fun setupTier(tier: Int?, rarity: String?) {
-            if (tier == null || rarity == null) return
-
+        private fun setupTier(tier: Int, rarity: String) {
             binding.TierRecyclerView.layoutManager =
                 GridLayoutManager(itemView.context, 3, GridLayoutManager.VERTICAL, false)
             binding.TierRecyclerView.adapter = tierAdapter

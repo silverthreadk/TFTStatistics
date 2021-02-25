@@ -29,15 +29,14 @@ class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
         fun bind(match: MatchDTO) {
             this.match = match
             val context = itemView.context
-            val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(match.info?.game_datetime?.toLong())
+            val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(match.info.game_datetime.toLong())
             binding.gameDatetime.text = dateFormat
 
-            var gameLength= (match.info?.game_length?.toDouble()?.div(60)).toString()
-            gameLength = gameLength.substring(0,2)+":"+ gameLength.substring(3,5)
-            binding.gameLength.text = gameLength
-            binding.type.text = if (match.info?.queue_id == "1100") itemView.context.getString(R.string.ranked) else itemView.context.getString(R.string.normal)
+            var gameLength = (match.info.game_length.toDouble().div(60)).toString()
+            binding.gameLength.text = gameLength.substring(0,2)+":"+ gameLength.substring(3,5)
+            binding.type.text = if (match.info.queue_id == "1100") itemView.context.getString(R.string.ranked) else itemView.context.getString(R.string.normal)
 
-            match.info?.participants?.find { participant ->
+            match.info.participants.find { participant ->
                 participant.puuid == puuid }?.let { participant ->
                 binding.placement.text = String.format(itemView.context.getString(R.string.placement), participant.placement)
                 var color = context.getColor(context.resources.getIdentifier("rarity_" + maxOf(0,5 - participant.placement), "color", context.packageName))
@@ -56,16 +55,14 @@ class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             }
         }
 
-        private fun setupUnits(units: List<UnitDTO>?) {
-            if (units.isNullOrEmpty()) return
+        private fun setupUnits(units: List<UnitDTO>) {
             binding.UnitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
             binding.UnitRecyclerView.adapter = unitAdapter
             unitAdapter.updateUnits(units)
         }
 
-        private fun setupTraits(traits: List<TraitDTO>?) {
-            if (traits.isNullOrEmpty()) return
+        private fun setupTraits(traits: List<TraitDTO>) {
             binding.TraitRecyclerView.layoutManager =
                     GridLayoutManager(itemView.context, 1, GridLayoutManager.HORIZONTAL, false)
             binding.TraitRecyclerView.adapter = traitAdapter
@@ -84,9 +81,13 @@ class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
         holder.bind(matches[position])
     }
 
-    fun updateMatchHistory(matches: List<MatchDTO>, puuid: String) {
+    fun updateMatchHistory(matches: List<MatchDTO>) {
         this.matches.clear()
         this.matches.addAll(matches)
+        notifyDataSetChanged()
+    }
+
+    fun updatePuuid(puuid: String){
         this.puuid = puuid
         notifyDataSetChanged()
     }

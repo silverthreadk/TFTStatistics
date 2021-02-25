@@ -20,7 +20,7 @@ class TierAdapter(private val tiers: MutableList<String>): RecyclerView.Adapter<
         fun bind(item: String) {
             this.tier = item
             val context = itemView.context
-            val color = context.getColor(context.resources.getIdentifier("rarity_" + item, "color", context.packageName))
+            val color = context.getColor(context.resources.getIdentifier("rarity_$item", "color", context.packageName))
             binding.tierIcon.color = color
         }
 

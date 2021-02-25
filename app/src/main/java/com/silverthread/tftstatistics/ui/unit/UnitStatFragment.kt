@@ -36,14 +36,17 @@ class UnitStatFragment: Fragment() {
         context?.let { binding.stats.setupItemDecoration(it) }
 
         summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
-            summoner.puuid?.let{
-                refresh(it)
-            }
+            refresh(summoner.puuid)
         })
 
         summonerViewModel.unitStatLiveData.observe(getViewLifecycleOwner(), Observer { units ->
             adapter.updateUnitStat(units)
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun refresh(id: String){

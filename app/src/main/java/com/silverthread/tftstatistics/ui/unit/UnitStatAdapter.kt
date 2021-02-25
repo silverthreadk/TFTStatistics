@@ -22,7 +22,7 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
         }
 
         fun bind(item: CompositeItem) {
-            if(item.isHeader){
+            if (item.isHeader) {
                 setupHeader()
             } else {
                 setupItem(item.statData)
@@ -36,7 +36,7 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
             }
         }
 
-        private fun setupHeader(){
+        private fun setupHeader() {
             val context = itemView.context
             binding.unitImage.visibility = GONE
             binding.name.margin(left = 20f)
@@ -47,19 +47,18 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
             binding.win.text = context.resources.getString(R.string.win_label)
         }
 
-        private fun setupItem(unit: StatData){
+        private fun setupItem(unit: StatData) {
             val context = itemView.context
             lateinit var charId: String
             lateinit var charName: String
-            unit.name.let{
-                if (it.startsWith("TFT4b_")) {
-                    charName = it.substring(6)
-                    charId = "tft4_" + charName.toLowerCase()
-                } else {
-                    charName = it.substring(5)
-                    charId = it.toLowerCase()
-                }
+            if (unit.name.startsWith("TFT4b_")) {
+                charName = unit.name.substring(6)
+                charId = "tft4_" + charName.toLowerCase()
+            } else {
+                charName = unit.name.substring(5)
+                charId = unit.name.toLowerCase()
             }
+
             binding.unitImage.setImageResource(
                     context.resources.getIdentifier(charId.toLowerCase(), "drawable", context.packageName))
             binding.unitImage.setBackgroundResource(

@@ -111,7 +111,7 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
             result.data.body()?.let {
                 val matchesList = mutableListOf<MatchDTO>()
                 it.forEach { matchId ->
-                    (loadMatch(matchId, matchesList))
+                    loadMatch(matchId, matchesList)
                 }
                 _matchLiveData.value = matchesList
                 loadStat(puuid)
@@ -125,31 +125,31 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
             val unitMap = mutableMapOf<String, StatData>()
             val traitMap = mutableMapOf<String, StatData>()
             _matchLiveData.value?.forEach { match ->
-                val participaint = match.info?.participants?.find { participant ->
+                val participaint = match.info.participants.find { participant ->
                     participant.puuid == puuid }
 
                 participaint?.let{ summoner ->
                     val isWin = summoner.placement == 1
                     val isTop4 = summoner.placement >= 4
 
-                    summoner.units?.forEach { unit->
-                        val s = unitMap.getOrDefault(unit.character_id, StatData())
-                        s.rarity = unit.rarity.toString()
+                    summoner.units.forEach { unit->
+                        val s = unitMap[unit.character_id] ?: StatData()
+                        s.rarity = unit.rarity
                         s.games += 1
-                        s.name = unit.character_id.toString()
+                        s.name = unit.character_id
                         s.place += summoner.placement
                         if (isWin) s.wins += 1
                         if (isTop4) s.top4 += 1
-                        unitMap.put(unit.character_id!!, s)
+                        unitMap.put(unit.character_id, s)
                     }
 
-                    summoner.traits?.
-                    filter{it.style != 0}?.
+                    summoner.traits.
+                    filter{it.style != 0}.
                     forEach{ trait->
                         val key = trait.name + " " + trait.style
-                        val s = traitMap.getOrDefault(key, StatData())
+                        val s = traitMap[key] ?: StatData()
                         s.games += 1
-                        s.name = trait.name.toString()
+                        s.name = trait.name
                         s.place += summoner.placement
                         s.style = trait.style
                         if (isWin) s.wins += 1
@@ -164,7 +164,7 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
         }
     }
 
-    private fun updateStat(liveData: MutableLiveData<List<CompositeItem>>, m: Map<String, StatData>){
+    private fun updateStat(liveData: MutableLiveData<List<CompositeItem>>, m: Map<String, StatData>) {
         val list = mutableListOf<CompositeItem>()
         list.add(CompositeItem.withHeader(Header()))
         list.addAll(m.values.toList().sortedByDescending { it.games }.map{CompositeItem.withStatData(it)})

@@ -20,7 +20,6 @@ class RecentMachesFragment  : Fragment() {
     private var _binding: FragmentMatchHistoryBinding? = null
     private val binding get() = _binding!!
     private val summonerViewModel: SummonerViewModel by activityViewModels()
-
     private val adapter = RecentMachesAdapter(mutableListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +35,18 @@ class RecentMachesFragment  : Fragment() {
         context?.let { binding.matchHistoryRecyclerView.setupItemDecoration(it) }
 
         summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
-            summoner.puuid?.let{
-                refresh(it)
-            }
+            refresh(summoner.puuid)
+            adapter.updatePuuid(summoner.puuid)
         })
 
         summonerViewModel.matchLiveData.observe(getViewLifecycleOwner(), Observer { match ->
-            adapter.updateMatchHistory(match, summonerViewModel.summonerLiveData.value?.puuid?:"")
+            adapter.updateMatchHistory(match)
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun refresh(id: String){
