@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
+import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 
 fun View.margin(left: Float? = null, top: Float? = null, right: Float? = null, bottom: Float? = null) {
     layoutParams<ViewGroup.MarginLayoutParams> {
@@ -28,4 +30,11 @@ fun Context.dpToPx(dp: Float): Int = TypedValue.applyDimension(TypedValue.COMPLE
 fun RecyclerView.setupItemDecoration(context: Context){
     val heightInPixels = resources.getDimensionPixelSize(R.dimen.list_item_divider_height)
     addItemDecoration(DividerItemDecoration(ContextCompat.getColor(context, R.color.rarity_0), heightInPixels))
+}
+
+fun SwipeRefreshLayout.refresh(summonerViewModel: SummonerViewModel) {
+    setOnRefreshListener {
+        summonerViewModel.loadSummonerByPuuid()
+        isRefreshing = false
+    }
 }

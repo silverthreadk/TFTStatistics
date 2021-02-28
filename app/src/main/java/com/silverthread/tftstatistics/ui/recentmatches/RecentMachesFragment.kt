@@ -13,6 +13,7 @@ import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentMatchHistoryBinding
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
+import com.silverthread.tftstatistics.util.refresh
 import com.silverthread.tftstatistics.util.setupItemDecoration
 
 class RecentMachesFragment  : Fragment() {
@@ -34,8 +35,9 @@ class RecentMachesFragment  : Fragment() {
         binding.matchHistoryRecyclerView.adapter = adapter
         context?.let { binding.matchHistoryRecyclerView.setupItemDecoration(it) }
 
+        binding.swipeRefresh.refresh(summonerViewModel)
+
         summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
-            refresh(summoner.puuid)
             adapter.updatePuuid(summoner.puuid)
         })
 
@@ -47,12 +49,5 @@ class RecentMachesFragment  : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun refresh(id: String){
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            summonerViewModel.loadSummonerByPuuid(id)
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
     }
 }

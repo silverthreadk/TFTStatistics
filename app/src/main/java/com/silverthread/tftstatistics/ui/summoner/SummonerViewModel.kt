@@ -68,9 +68,11 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
         }
     }
 
-    fun loadSummonerByPuuid(puuid: String) {
+    fun loadSummonerByPuuid() {
         viewModelScope.launch {
             if (isActive) {
+                val puuid = summonerLiveData.value?.puuid ?: ""
+                if (puuid.isEmpty()) return@launch
                 _progressLiveData.value = 0
                 val result = remoteApi.getSummonerByPuuid((regionLiveData.value?: Region.KR).platformRoutingValue, puuid)
                 if (result is Success) {

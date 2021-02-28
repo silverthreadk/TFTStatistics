@@ -13,6 +13,7 @@ import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentStatBinding
 import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
+import com.silverthread.tftstatistics.util.refresh
 import com.silverthread.tftstatistics.util.setupItemDecoration
 
 class UnitStatFragment: Fragment() {
@@ -35,9 +36,7 @@ class UnitStatFragment: Fragment() {
         binding.stats.adapter = adapter
         context?.let { binding.stats.setupItemDecoration(it) }
 
-        summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
-            refresh(summoner.puuid)
-        })
+        binding.swipeRefresh.refresh(summonerViewModel)
 
         summonerViewModel.unitStatLiveData.observe(getViewLifecycleOwner(), Observer { units ->
             adapter.updateUnitStat(units)
@@ -47,12 +46,5 @@ class UnitStatFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun refresh(id: String){
-        binding.swipeRefresh.setOnRefreshListener {
-            summonerViewModel.loadSummonerByPuuid(id)
-            binding.swipeRefresh.isRefreshing = false
-        }
     }
 }
