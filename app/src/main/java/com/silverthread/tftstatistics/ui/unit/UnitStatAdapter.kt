@@ -9,6 +9,7 @@ import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.ListItemUnitStatBinding
 import com.silverthread.tftstatistics.model.CompositeItem
 import com.silverthread.tftstatistics.model.StatData
+import com.silverthread.tftstatistics.util.getName
 import com.silverthread.tftstatistics.util.margin
 
 
@@ -49,15 +50,8 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
 
         private fun setupItem(unit: StatData) {
             val context = itemView.context
-            lateinit var charId: String
-            lateinit var charName: String
-            if (unit.name.startsWith("TFT4b_")) {
-                charName = unit.name.substring(6)
-                charId = "tft4_" + charName.toLowerCase()
-            } else {
-                charName = unit.name.substring(5)
-                charId = unit.name.toLowerCase()
-            }
+            val charName = unit.name.getName()
+            val charId = "tft4_" + charName.toLowerCase()
 
             binding.unitImage.setImageResource(
                     context.resources.getIdentifier(charId.toLowerCase(), "drawable", context.packageName))
