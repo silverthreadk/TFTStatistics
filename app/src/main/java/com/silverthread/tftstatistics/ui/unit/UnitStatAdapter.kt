@@ -10,6 +10,7 @@ import com.silverthread.tftstatistics.databinding.ListItemUnitStatBinding
 import com.silverthread.tftstatistics.model.CompositeItem
 import com.silverthread.tftstatistics.model.StatData
 import com.silverthread.tftstatistics.util.getName
+import com.silverthread.tftstatistics.util.getWinRate
 import com.silverthread.tftstatistics.util.margin
 
 
@@ -60,8 +61,8 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
             binding.name.text = charName
             binding.game.text = unit.games.toString()
             binding.place.text = String.format("%.2f", unit.place / unit.games.toFloat())
-            binding.top4.text = String.format(context.resources.getString(R.string.percent), 100 * unit.top4 / 20f)
-            binding.win.text = String.format(context.resources.getString(R.string.percent), 100 * unit.wins / 20f)
+            binding.top4.text = context.getWinRate(R.string.percent, unit.top4, 20)
+            binding.win.text = context.getWinRate(R.string.percent, unit.wins, 20)
         }
     }
 

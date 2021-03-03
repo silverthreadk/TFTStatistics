@@ -10,6 +10,7 @@ import com.silverthread.tftstatistics.databinding.ListItemTraitStatBinding
 import com.silverthread.tftstatistics.model.CompositeItem
 import com.silverthread.tftstatistics.model.StatData
 import com.silverthread.tftstatistics.util.getName
+import com.silverthread.tftstatistics.util.getWinRate
 import com.silverthread.tftstatistics.util.margin
 
 
@@ -61,8 +62,8 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
             binding.name.text = traitName
             binding.game.text = trait.games.toString()
             binding.place.text = String.format("%.2f", trait.place / trait.games.toFloat())
-            binding.top4.text = String.format(context.resources.getString(R.string.percent), 100 * trait.top4 / 20f)
-            binding.win.text = String.format(context.resources.getString(R.string.percent), 100 * trait.wins / 20f)
+            binding.top4.text = context.getWinRate(R.string.percent, trait.top4, 20)
+            binding.win.text = context.getWinRate(R.string.percent, trait.wins, 20)
         }
     }
 

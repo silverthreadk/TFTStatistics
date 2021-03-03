@@ -15,6 +15,7 @@ import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentSummonerTabBinding
 import com.silverthread.tftstatistics.ui.main.MainActivity
 import com.silverthread.tftstatistics.util.dismissKeyboard
+import com.silverthread.tftstatistics.util.getWinRate
 
 class SummonerTabFragment : Fragment() {
 
@@ -92,12 +93,7 @@ class SummonerTabFragment : Fragment() {
             binding.summoner.leaguePoints.text = String.format(resources.getString(R.string.lp), leagueEntry.leaguePoints)
             binding.summoner.games.text = String.format(resources.getString(R.string.games), (leagueEntry.wins + leagueEntry.losses))
             binding.summoner.wins.text = String.format(resources.getString(R.string.wins), leagueEntry.wins)
-            val winRate = if (leagueEntry.wins + leagueEntry.losses > 0) {
-                100f * leagueEntry.wins / (leagueEntry.wins + leagueEntry.losses)
-            } else {
-                0f
-            }
-            binding.summoner.winRate.text = String.format(resources.getString(R.string.win_rate), winRate)
+            binding.summoner.winRate.text = context?.getWinRate(R.string.win_rate, leagueEntry.wins, leagueEntry.wins + leagueEntry.losses)
         })
         summonerViewModel.regionLiveData.observe(getViewLifecycleOwner(), Observer { region ->
             binding.summoner.region.text = region.id
