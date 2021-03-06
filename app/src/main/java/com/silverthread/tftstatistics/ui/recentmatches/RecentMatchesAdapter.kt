@@ -13,7 +13,7 @@ import com.silverthread.tftstatistics.model.response.UnitDTO
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerView.Adapter<RecentMachesAdapter.ViewHolder>() {
+class RecentMatchesAdapter(private val matches: MutableList<MatchDTO>): RecyclerView.Adapter<RecentMatchesAdapter.ViewHolder>() {
     private var puuid = ""
 
     inner class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
@@ -32,12 +32,13 @@ class RecentMachesAdapter(private val matches: MutableList<MatchDTO>): RecyclerV
             val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(match.info.game_datetime.toLong())
             binding.gameDatetime.text = dateFormat
 
-            var gameLength = (match.info.game_length.toDouble().div(60)).toString()
-            binding.gameLength.text = gameLength.substring(0,2)+":"+ gameLength.substring(3,5)
+            val gameLength = (match.info.game_length.toDouble().div(60)).toString()
+            binding.gameLength.text = String.format(itemView.context.getString(R.string.game_length), gameLength.substring(0,2), gameLength.substring(3,5))
             binding.type.text = if (match.info.queue_id == "1100") itemView.context.getString(R.string.ranked) else itemView.context.getString(R.string.normal)
 
             match.info.participants.find { participant ->
-                participant.puuid == puuid }?.let { participant ->
+                participant.puuid == puuid
+            }?.let { participant ->
                 binding.placement.text = String.format(itemView.context.getString(R.string.placement), participant.placement)
                 var color = context.getColor(context.resources.getIdentifier("rarity_" + maxOf(0,5 - participant.placement), "color", context.packageName))
                 binding.border.setBackgroundColor(color)

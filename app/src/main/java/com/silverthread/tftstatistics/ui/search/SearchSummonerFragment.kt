@@ -1,14 +1,11 @@
 package com.silverthread.tftstatistics.ui.search
 
-import android.content.Context
 import android.os.Bundle
-import android.os.IBinder
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
@@ -70,10 +67,10 @@ class SearchSummonerFragment : Fragment() {
             }
         }
 
-        summonerViewModel.searchEventLiveData.observe(getViewLifecycleOwner(), EventObserver {
-            showSummonor()
+        summonerViewModel.searchEventLiveData.observe(viewLifecycleOwner, EventObserver {
+            showSummoner()
         })
-        summonerViewModel.regionLiveData.observe(getViewLifecycleOwner(), Observer { region ->
+        summonerViewModel.regionLiveData.observe(viewLifecycleOwner, Observer { region ->
             binding.spinner.setSelection(region.ordinal, false)
         })
     }
@@ -105,7 +102,7 @@ class SearchSummonerFragment : Fragment() {
         dismissKeyboard(view.windowToken)
     }
 
-    private fun showSummonor(){
+    private fun showSummoner(){
         view?.let{
             val action = SearchSummonerFragmentDirections.actionSearchSummonerFragmentToSummonerTabFragment()
             it.findNavController().navigate(action)

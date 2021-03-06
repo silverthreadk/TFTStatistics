@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.silverthread.tftstatistics.R
 import com.silverthread.tftstatistics.databinding.FragmentStatBinding
-import com.silverthread.tftstatistics.ui.common.DividerItemDecoration
 import com.silverthread.tftstatistics.ui.summoner.SummonerViewModel
 import com.silverthread.tftstatistics.util.refresh
 import com.silverthread.tftstatistics.util.setupItemDecoration
@@ -38,7 +35,7 @@ class UnitStatFragment: Fragment() {
 
         binding.swipeRefresh.refresh(summonerViewModel)
 
-        summonerViewModel.unitStatLiveData.observe(getViewLifecycleOwner(), Observer { units ->
+        summonerViewModel.unitStatLiveData.observe(viewLifecycleOwner, Observer { units ->
             adapter.updateUnitStat(units)
         })
     }

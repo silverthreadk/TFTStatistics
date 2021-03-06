@@ -66,11 +66,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/leaguePoints"
+        app:layout_constraintEnd_toStartOf="@+id/rank"
         app:layout_constraintStart_toStartOf="@+id/tierIcon"
         app:layout_constraintTop_toBottomOf="@+id/tierIcon"
         app:layout_constraintHorizontal_chainStyle="packed"
         tools:text="tier" />
+
+    <TextView
+        android:id="@+id/rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/leaguePoints"
+        app:layout_constraintStart_toEndOf="@+id/tier"
+        app:layout_constraintTop_toTopOf="@+id/tier"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        tools:text="III" />
 
     <TextView
         android:id="@+id/leaguePoints"
@@ -79,7 +91,7 @@
         android:layout_marginStart="10dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@+id/tierIcon"
-        app:layout_constraintStart_toEndOf="@+id/tier"
+        app:layout_constraintStart_toEndOf="@+id/rank"
         app:layout_constraintTop_toTopOf="@+id/tier"
         app:layout_constraintHorizontal_chainStyle="packed"
         tools:text="0 LP" />

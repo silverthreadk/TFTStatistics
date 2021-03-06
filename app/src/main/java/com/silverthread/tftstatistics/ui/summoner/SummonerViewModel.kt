@@ -59,7 +59,7 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                 val result = remoteApi.getSummoner((regionLiveData.value?: Region.KR).platformRoutingValue, summonerName)
                 if (result is Success) {
                     result.data.body()?.puuid?.let { loadMatches(it) }
-                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
+                    result.data.body()?.id?.let { loadTFTLeagueBySummoner(it) }
                     _summonerLiveData.value = result.data.body()
                     _searchEventLiveData.value = Event(Unit)
                 }
@@ -77,7 +77,7 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                 val result = remoteApi.getSummonerByPuuid((regionLiveData.value?: Region.KR).platformRoutingValue, puuid)
                 if (result is Success) {
                     result.data.body()?.puuid?.let { loadMatches(it) }
-                    result.data.body()?.id?.let { loadTFTLegueBySummoner(it) }
+                    result.data.body()?.id?.let { loadTFTLeagueBySummoner(it) }
                     _summonerLiveData.value = result.data.body()
                 }
                 _progressLiveData.value = 8
@@ -85,8 +85,8 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
         }
     }
 
-    private suspend fun loadTFTLegueBySummoner(encryptedSummonerId: String) {
-        val result = remoteApi.getTFTLegueBySummoner((regionLiveData.value?: Region.KR).platformRoutingValue, encryptedSummonerId)
+    private suspend fun loadTFTLeagueBySummoner(encryptedSummonerId: String) {
+        val result = remoteApi.getTFTLeagueBySummoner((regionLiveData.value?: Region.KR).platformRoutingValue, encryptedSummonerId)
         if (result is Success) {
             if (result.data.body().isNullOrEmpty()) {
                 _leagueEntryLiveData.value = LeagueEntryDTO()
@@ -128,7 +128,8 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
             val traitMap = mutableMapOf<String, StatData>()
             _matchLiveData.value?.forEach { match ->
                 val participaint = match.info.participants.find { participant ->
-                    participant.puuid == puuid }
+                    participant.puuid == puuid
+                }
 
                 participaint?.let{ summoner ->
                     val isWin = summoner.placement == 1
@@ -142,7 +143,7 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                         s.place += summoner.placement
                         if (isWin) s.wins += 1
                         if (isTop4) s.top4 += 1
-                        unitMap.put(unit.character_id, s)
+                        unitMap[unit.character_id] = s
                     }
 
                     summoner.traits.
@@ -156,7 +157,7 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                         s.style = trait.style
                         if (isWin) s.wins += 1
                         if (isTop4) s.top4 += 1
-                        traitMap.put(key, s)
+                        traitMap[key] = s
                     }
                 }
             }

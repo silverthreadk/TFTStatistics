@@ -10,11 +10,11 @@
         android:label="TodoListFragment">
         <action
             android:id="@+id/action_SearchSummonerFragment_to_SummonerTabFragment"
-            app:destination="@id/summonorTabFragment" />
+            app:destination="@id/summonerTabFragment" />
     </fragment>
     <fragment
-        android:id="@+id/summonorTabFragment"
+        android:id="@+id/summonerTabFragment"
         android:name="com.silverthread.tftstatistics.ui.summoner.SummonerTabFragment"
-        android:label="SummonorTabFragment" >
+        android:label="SummonerTabFragment" >
     </fragment>
 </navigation>

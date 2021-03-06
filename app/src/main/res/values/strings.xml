@@ -19,6 +19,7 @@
     <string name="games">Games: %1$d</string>
     <string name="wins">Wins: %1$d</string>
     <string name="win_rate">Win Rate: %1$.2f%%</string>
+    <string name="game_length">%1s:%2s</string>
     <string name="placement">#%1$d</string>
     <string name="ranked">Ranked</string>
     <string name="normal">Normal</string>

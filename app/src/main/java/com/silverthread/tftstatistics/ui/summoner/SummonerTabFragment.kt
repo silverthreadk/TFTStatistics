@@ -1,10 +1,12 @@
 package com.silverthread.tftstatistics.ui.summoner
 
-import android.content.Context
 import android.os.Bundle
-import android.os.IBinder
-import android.view.*
-import android.view.inputmethod.InputMethodManager
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -77,7 +79,7 @@ class SummonerTabFragment : Fragment() {
             }
         }.attach()
 
-        summonerViewModel.summonerLiveData.observe(getViewLifecycleOwner(), Observer { summoner ->
+        summonerViewModel.summonerLiveData.observe(viewLifecycleOwner, Observer { summoner ->
             binding.summoner.level.text = String.format(resources.getString(R.string.level), summoner.summonerLevel)
             binding.summoner.summonerName.text = summoner.name
             val url = "http://ddragon.leagueoflegends.com/cdn/10.25.1/img/profileicon/${summoner.profileIconId}.png"
@@ -86,8 +88,9 @@ class SummonerTabFragment : Fragment() {
                     .circleCrop()
                     .into(binding.summoner.summonerIcon)
         })
-        summonerViewModel.leagueEntryLiveData.observe(getViewLifecycleOwner(), Observer { leagueEntry ->
-            binding.summoner.tier.text = "${leagueEntry.tier} ${leagueEntry.rank}"
+        summonerViewModel.leagueEntryLiveData.observe(viewLifecycleOwner, Observer { leagueEntry ->
+            binding.summoner.tier.text = leagueEntry.tier
+            binding.summoner.rank.text = leagueEntry.rank
             val tierResource = resources.getIdentifier("emblem_" + leagueEntry.tier.toLowerCase(), "drawable", requireContext().packageName)
             binding.summoner.tierIcon.setImageResource(tierResource)
             binding.summoner.leaguePoints.text = String.format(resources.getString(R.string.lp), leagueEntry.leaguePoints)
@@ -95,7 +98,7 @@ class SummonerTabFragment : Fragment() {
             binding.summoner.wins.text = String.format(resources.getString(R.string.wins), leagueEntry.wins)
             binding.summoner.winRate.text = context?.getWinRate(R.string.win_rate, leagueEntry.wins, leagueEntry.wins + leagueEntry.losses)
         })
-        summonerViewModel.regionLiveData.observe(getViewLifecycleOwner(), Observer { region ->
+        summonerViewModel.regionLiveData.observe(viewLifecycleOwner, Observer { region ->
             binding.summoner.region.text = region.id
         })
     }

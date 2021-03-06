@@ -15,7 +15,7 @@ interface RemoteApiService {
     suspend fun getSummonerByPuuid(@Path("platform") platform: String, @Path("puuid") summonerName: String, @Query("api_key") apiKey: String): Response<SummonerDTO>
 
     @GET("https://{platform}.api.riotgames.com/tft/league/v1/entries/by-summoner/{encryptedSummonerId}")
-    suspend fun getTFTLegueBySummoner(@Path("platform") platform: String, @Path("encryptedSummonerId") summonerName: String, @Query("api_key") apiKey: String): Response<Set<LeagueEntryDTO>>
+    suspend fun getTFTLeagueBySummoner(@Path("platform") platform: String, @Path("encryptedSummonerId") summonerName: String, @Query("api_key") apiKey: String): Response<Set<LeagueEntryDTO>>
 
     @GET("https://{region}.api.riotgames.com/tft/match/v1/matches/by-puuid/{puuid}/ids")
     suspend fun getMatches(@Path("region") region: String, @Path("puuid") puuid: String, @Query("count") count: String, @Query("api_key") apiKey: String): Response<List<String>>

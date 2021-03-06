@@ -33,8 +33,8 @@ class RemoteApi constructor(private val apiService: RemoteApiService) {
         Failure(error)
     }
 
-    suspend fun getTFTLegueBySummoner(platform: String, encryptedSummonerId: String) = try {
-        val data = apiService.getTFTLegueBySummoner(platform, encryptedSummonerId, API_KEY)
+    suspend fun getTFTLeagueBySummoner(platform: String, encryptedSummonerId: String) = try {
+        val data = apiService.getTFTLeagueBySummoner(platform, encryptedSummonerId, API_KEY)
 
         if(data.isSuccessful){
             Success(data)
