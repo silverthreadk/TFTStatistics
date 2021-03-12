@@ -30,4 +30,5 @@
     <string name="top4_label">Top4</string>
     <string name="win_label">Win</string>
     <string name="percent">%1$.2f%%</string>
+    <string name="message_not_found">Summoner Not Found</string>
 </resources>

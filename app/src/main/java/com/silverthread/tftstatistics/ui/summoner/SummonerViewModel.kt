@@ -40,6 +40,9 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
     private val _progressLiveData = MutableLiveData<Int>()
     val progressLiveData : LiveData<Int>
         get() = _progressLiveData
+    private val _notFoundLiveData = MutableLiveData<Event<Unit>>()
+    val notFoundLiveData : LiveData<Event<Unit>>
+        get() = _notFoundLiveData
     private val _searchEventLiveData = MutableLiveData<Event<Unit>>()
     val searchEventLiveData : LiveData<Event<Unit>>
         get() = _searchEventLiveData
@@ -62,6 +65,8 @@ class SummonerViewModel @ViewModelInject constructor(private val remoteApi: Remo
                     result.data.body()?.id?.let { loadTFTLeagueBySummoner(it) }
                     _summonerLiveData.value = result.data.body()
                     _searchEventLiveData.value = Event(Unit)
+                } else {
+                    _notFoundLiveData.value = Event(Unit)
                 }
                 _progressLiveData.value = 8
             }
