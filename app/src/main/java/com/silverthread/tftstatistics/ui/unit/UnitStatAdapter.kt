@@ -40,13 +40,15 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
 
         private fun setupHeader() {
             val context = itemView.context
-            binding.unitImage.visibility = GONE
-            binding.name.margin(left = 20f)
-            binding.name.text = context.resources.getString(R.string.unit)
-            binding.game.text = context.resources.getString(R.string.games_label)
-            binding.place.text = context.resources.getString(R.string.place_label)
-            binding.top4.text = context.resources.getString(R.string.top4_label)
-            binding.win.text = context.resources.getString(R.string.win_label)
+            binding.apply{
+                unitImage.visibility = GONE
+                name.margin(left = 20f)
+                name.text = context.resources.getString(R.string.unit)
+                game.text = context.resources.getString(R.string.games_label)
+                place.text = context.resources.getString(R.string.place_label)
+                top4.text = context.resources.getString(R.string.top4_label)
+                win.text = context.resources.getString(R.string.win_label)
+            }
         }
 
         private fun setupItem(unit: StatData) {
@@ -54,15 +56,17 @@ class UnitStatsAdapter(private val compositeItems: MutableList<CompositeItem>): 
             val charName = unit.name.getName()
             val charId = "tft4_" + charName.toLowerCase()
 
-            binding.unitImage.setImageResource(
-                    context.resources.getIdentifier(charId.toLowerCase(), "drawable", context.packageName))
-            binding.unitImage.setBackgroundResource(
-                    context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
-            binding.name.text = charName
-            binding.game.text = unit.games.toString()
-            binding.place.text = String.format("%.2f", unit.place / unit.games.toFloat())
-            binding.top4.text = context.getWinRate(R.string.percent, unit.top4, 20)
-            binding.win.text = context.getWinRate(R.string.percent, unit.wins, 20)
+            binding.apply{
+                unitImage.setImageResource(
+                        context.resources.getIdentifier(charId.toLowerCase(), "drawable", context.packageName))
+                unitImage.setBackgroundResource(
+                        context.resources.getIdentifier("rarity_frame_"+unit.rarity, "drawable", context.packageName))
+                name.text = charName
+                game.text = unit.games.toString()
+                place.text = String.format("%.2f", unit.place / unit.games.toFloat())
+                top4.text = context.getWinRate(R.string.percent, unit.top4, 20)
+                win.text = context.getWinRate(R.string.percent, unit.wins, 20)
+            }
         }
     }
 

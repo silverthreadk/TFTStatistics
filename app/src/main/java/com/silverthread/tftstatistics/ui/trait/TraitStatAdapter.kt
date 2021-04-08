@@ -40,30 +40,33 @@ class TraitStatsAdapter(private val compositeItems: MutableList<CompositeItem>):
 
         private fun setupHeader() {
             val context = itemView.context
-            binding.traitImage.visibility = GONE
-            binding.name.margin(left = 20f)
-            binding.name.text = context.resources.getString(R.string.trait)
-            binding.game.text = context.resources.getString(R.string.games_label)
-            binding.place.text = context.resources.getString(R.string.place_label)
-            binding.top4.text = context.resources.getString(R.string.top4_label)
-            binding.win.text = context.resources.getString(R.string.win_label)
+            binding.apply{
+                traitImage.visibility = GONE
+                name.margin(left = 20f)
+                name.text = context.resources.getString(R.string.trait)
+                game.text = context.resources.getString(R.string.games_label)
+                place.text = context.resources.getString(R.string.place_label)
+                top4.text = context.resources.getString(R.string.top4_label)
+                win.text = context.resources.getString(R.string.win_label)
+            }
         }
 
         private fun setupItem(trait: StatData) {
             val context = itemView.context
             val traitName = trait.name.getName()
             val traitId = "trait_" + traitName.toLowerCase()
-
-            binding.traitImage.setImageResource(
-                    context.resources.getIdentifier(traitId, "drawable", context.packageName))
             val color = context.resources.getIdentifier("trait_" + trait.style, "color", context.packageName)
             val csl = context.getColorStateList(color)
-            binding.traitImage.imageTintList = csl
-            binding.name.text = traitName
-            binding.game.text = trait.games.toString()
-            binding.place.text = String.format("%.2f", trait.place / trait.games.toFloat())
-            binding.top4.text = context.getWinRate(R.string.percent, trait.top4, 20)
-            binding.win.text = context.getWinRate(R.string.percent, trait.wins, 20)
+            binding.apply{
+                traitImage.setImageResource(
+                        context.resources.getIdentifier(traitId, "drawable", context.packageName))
+                traitImage.imageTintList = csl
+                name.text = traitName
+                game.text = trait.games.toString()
+                place.text = String.format("%.2f", trait.place / trait.games.toFloat())
+                top4.text = context.getWinRate(R.string.percent, trait.top4, 20)
+                win.text = context.getWinRate(R.string.percent, trait.wins, 20)
+            }
         }
     }
 
